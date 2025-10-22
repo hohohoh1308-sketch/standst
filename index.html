@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Игровой Магазин | Главная</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         /* Базовые настройки и сброс стилей */
         * {
@@ -17,6 +18,8 @@
             background-color: #0f1419;
             color: #e0e0e0;
             line-height: 1.6;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
         a {
@@ -27,13 +30,13 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 15px;
         }
 
         /* Стили для шапки */
         .header {
             background-color: #1a1f25;
-            padding: 15px 0;
+            padding: 12px 0;
             border-bottom: 1px solid #2a313a;
             position: sticky;
             top: 0;
@@ -47,7 +50,7 @@
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             color: #4a8bff;
         }
@@ -57,15 +60,19 @@
             display: flex;
             gap: 0;
             background-color: #1a1f25;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .tab {
-            padding: 15px 25px;
+            padding: 12px 20px;
             cursor: pointer;
             color: #b0b7c3;
             font-weight: 500;
             transition: all 0.3s ease;
             border-bottom: 2px solid transparent;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .tab:hover {
@@ -97,12 +104,12 @@
         .user-info {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .user-avatar {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: linear-gradient(45deg, #4a8bff, #8a2be2);
             display: flex;
@@ -110,106 +117,43 @@
             justify-content: center;
             color: white;
             font-weight: bold;
+            font-size: 14px;
         }
 
         .user-name {
             color: #b0b7c3;
             font-weight: 500;
-        }
-
-        .logout-btn {
-            background: none;
-            border: 1px solid #4a8bff;
-            color: #4a8bff;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-left: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .logout-btn:hover {
-            background-color: #4a8bff;
-            color: white;
-        }
-
-        /* Стили для формы входа */
-        .login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            background: #1a1f25;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #2a313a;
-            max-width: 300px;
-            margin: 20px auto;
-        }
-
-        .login-form input {
-            background: #2a313a;
-            border: 1px solid #3a4550;
-            padding: 10px;
-            border-radius: 4px;
-            color: white;
-        }
-
-        .login-form input:focus {
-            outline: none;
-            border-color: #4a8bff;
-        }
-
-        .btn {
-            background-color: #4a8bff;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: #3a7be0;
-        }
-
-        .telegram-btn {
-            background: linear-gradient(45deg, #0088cc, #34b7f1);
-        }
-
-        .telegram-btn:hover {
-            background: linear-gradient(45deg, #0077b5, #2aa8e0);
+            font-size: 14px;
         }
 
         /* Стили для баннера */
         .hero-banner {
             background: linear-gradient(135deg, #1a2a3a 0%, #2a3a4a 100%);
-            padding: 60px 0;
+            padding: 40px 0;
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             border-radius: 0 0 10px 10px;
         }
 
         .hero-banner h1 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+            font-size: 2rem;
+            margin-bottom: 12px;
             color: white;
         }
 
         .hero-banner p {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #b0b7c3;
             max-width: 600px;
-            margin: 0 auto 25px;
+            margin: 0 auto 20px;
         }
 
         /* Стили для сетки товаров */
         .items-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
         }
 
         .item-card {
@@ -221,37 +165,38 @@
         }
 
         .item-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             border-color: #4a8bff;
         }
 
         .item-image {
             width: 100%;
-            height: 180px;
+            height: 140px;
             background-color: #2a313a;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #666;
-            font-size: 14px;
+            font-size: 12px;
             border-bottom: 1px solid #2a313a;
         }
 
         .item-info {
-            padding: 15px;
+            padding: 12px;
         }
 
         .item-name {
-            font-size: 18px;
-            margin-bottom: 8px;
+            font-size: 16px;
+            margin-bottom: 6px;
             color: #fff;
         }
 
         .item-description {
-            font-size: 14px;
+            font-size: 12px;
             color: #8a939e;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
+            line-height: 1.4;
         }
 
         .item-price {
@@ -261,35 +206,50 @@
         }
 
         .price {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             color: #4a8bff;
+        }
+
+        .btn {
+            background-color: #4a8bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background-color: #3a7be0;
+        }
+
+        .btn-small {
+            padding: 6px 10px;
+            font-size: 12px;
         }
 
         /* Стили для футера */
         .footer {
             background-color: #1a1f25;
-            padding: 40px 0;
+            padding: 30px 0;
             border-top: 1px solid #2a313a;
-            margin-top: 50px;
+            margin-top: 40px;
         }
 
         .footer-content {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 30px;
-        }
-
-        .footer-section {
-            flex: 1;
-            min-width: 200px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
         }
 
         .footer-section h3 {
             color: #fff;
-            margin-bottom: 20px;
-            font-size: 18px;
+            margin-bottom: 15px;
+            font-size: 16px;
         }
 
         .footer-links {
@@ -297,12 +257,13 @@
         }
 
         .footer-links li {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .footer-links a {
             color: #8a939e;
             transition: color 0.3s ease;
+            font-size: 14px;
         }
 
         .footer-links a:hover {
@@ -311,35 +272,72 @@
 
         .copyright {
             text-align: center;
-            margin-top: 40px;
+            margin-top: 30px;
             color: #8a939e;
-            font-size: 14px;
+            font-size: 12px;
         }
 
-        /* Адаптивность */
+        /* Telegram-specific стили */
+        .tg-back-button {
+            display: none;
+        }
+
+        /* Адаптивность для мобильных устройств */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
-                gap: 15px;
+                gap: 12px;
             }
 
             .tabs {
-                flex-wrap: wrap;
-                justify-content: center;
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .tab {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+
+            .hero-banner {
+                padding: 30px 0;
             }
 
             .hero-banner h1 {
-                font-size: 2rem;
+                font-size: 1.5rem;
+            }
+
+            .hero-banner p {
+                font-size: 0.9rem;
             }
 
             .items-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 15px;
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 12px;
+            }
+
+            .item-image {
+                height: 120px;
             }
 
             .user-info {
-                flex-direction: column;
+                flex-direction: row;
                 text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 10px;
+            }
+            
+            .items-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .tab {
+                padding: 8px 12px;
+                font-size: 13px;
             }
         }
     </style>
@@ -359,33 +357,21 @@
             </div>
 
             <!-- Блок пользователя -->
-            <div class="user-info" id="userInfo" style="display: none;">
+            <div class="user-info" id="userInfo">
                 <div class="user-avatar" id="userAvatar">U</div>
-                <span class="user-name" id="userName">Пользователь</span>
-                <button class="logout-btn" onclick="logout()">Выйти</button>
+                <span class="user-name" id="userName">Загрузка...</span>
             </div>
-
-            <!-- Кнопка входа через Telegram -->
-            <button class="btn telegram-btn" id="loginBtn" onclick="showLoginForm()">Войти через Telegram</button>
         </div>
     </header>
 
     <!-- Основной контент -->
     <main class="container">
-        <!-- Форма входа (изначально скрыта) -->
-        <div id="loginForm" class="login-form" style="display: none;">
-            <h3>Вход через Telegram</h3>
-            <input type="text" id="username" placeholder="Имя пользователя" required>
-            <input type="tel" id="phone" placeholder="Номер телефона" required>
-            <button class="btn telegram-btn" onclick="login()">Войти</button>
-        </div>
-
         <!-- Содержимое вкладки "Магазин" -->
         <section id="shop" class="tab-content active">
             <div class="hero-banner">
                 <h1>Лучшие игровые предметы</h1>
                 <p>Приобретайте эксклюзивные скины, оружие и многое другое в нашем магазине</p>
-                <button class="btn">Смотреть каталог</button>
+                <button class="btn" onclick="showCatalog()">Смотреть каталог</button>
             </div>
 
             <div class="items-grid">
@@ -397,7 +383,7 @@
                         <div class="item-description">Штурмовая винтовка с уникальным дизайном</div>
                         <div class="item-price">
                             <span class="price">1 250 ¢</span>
-                            <button class="btn">Купить</button>
+                            <button class="btn btn-small" onclick="buyItem('AKR | Легион', 1250)">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -410,7 +396,7 @@
                         <div class="item-description">Мощный пистолет с огненным оформлением</div>
                         <div class="item-price">
                             <span class="price">890 ¢</span>
-                            <button class="btn">Купить</button>
+                            <button class="btn btn-small" onclick="buyItem('Пистолет | Дракон', 890)">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -423,7 +409,7 @@
                         <div class="item-description">Оружие ближнего боя с анимацией</div>
                         <div class="item-price">
                             <span class="price">2 150 ¢</span>
-                            <button class="btn">Купить</button>
+                            <button class="btn btn-small" onclick="buyItem('Нож | Хищник', 2150)">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -436,7 +422,7 @@
                         <div class="item-description">Точная винтовка для дальних дистанций</div>
                         <div class="item-price">
                             <span class="price">1 750 ¢</span>
-                            <button class="btn">Купить</button>
+                            <button class="btn btn-small" onclick="buyItem('Снайперская | Призрак', 1750)">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -459,7 +445,7 @@
                         <div class="item-description">Эксклюзивная версия в золотом оформлении</div>
                         <div class="item-price">
                             <span class="price">5 000 ¢</span>
-                            <button class="btn">Купить</button>
+                            <button class="btn btn-small" onclick="buyItem('Золотой AKR', 5000)">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -472,7 +458,7 @@
                         <div class="item-description">Нож с уникальной анимацией вынимания</div>
                         <div class="item-price">
                             <span class="price">3 500 ¢</span>
-                            <button class="btn">Купить</button>
+                            <button class="btn btn-small" onclick="buyItem('Анимационный нож', 3500)">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -496,7 +482,7 @@
                         <div class="item-price">
                             <span class="price" style="color: #ff6b6b; text-decoration: line-through;">2 000 ¢</span>
                             <span class="price">1 000 ¢</span>
-                            <button class="btn">Купить</button>
+                            <button class="btn btn-small" onclick="buyItem('Набор новичка', 1000)">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -510,19 +496,19 @@
                 <p>Узнайте больше о нашей компании и принципах работы</p>
             </div>
 
-            <div style="max-width: 800px; margin: 0 auto; padding: 40px 0;">
-                <h2 style="margin-bottom: 20px; color: #4a8bff;">Наша миссия</h2>
-                <p style="margin-bottom: 30px; font-size: 16px; line-height: 1.8;">
+            <div style="max-width: 800px; margin: 0 auto; padding: 30px 0;">
+                <h2 style="margin-bottom: 15px; color: #4a8bff; font-size: 20px;">Наша миссия</h2>
+                <p style="margin-bottom: 25px; font-size: 15px; line-height: 1.6;">
                     Мы - ведущий магазин игровых предметов, предлагающий лучшие товары для геймеров. 
                     Наша цель - обеспечить безопасные и выгодные сделки для всех участников игрового сообщества.
                 </p>
 
-                <h2 style="margin-bottom: 20px; color: #4a8bff;">Почему мы?</h2>
+                <h2 style="margin-bottom: 15px; color: #4a8bff; font-size: 20px;">Почему мы?</h2>
                 <ul style="list-style: none; padding: 0;">
-                    <li style="padding: 10px 0; border-bottom: 1px solid #2a313a;">✅ Гарантия безопасности сделок</li>
-                    <li style="padding: 10px 0; border-bottom: 1px solid #2a313a;">✅ Мгновенная доставка</li>
-                    <li style="padding: 10px 0; border-bottom: 1px solid #2a313a;">✅ Поддержка 24/7</li>
-                    <li style="padding: 10px 0; border-bottom: 1px solid #2a313a;">✅ Лучшие цены на рынке</li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid #2a313a;">✅ Гарантия безопасности сделок</li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid #2a313a;">✅ Мгновенная доставка</li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid #2a313a;">✅ Поддержка 24/7</li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid #2a313a;">✅ Лучшие цены на рынке</li>
                 </ul>
             </div>
         </section>
@@ -534,7 +520,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>О нас</h3>
-                    <p>Мы - ведущий магазин игровых предметов, предлагающий лучшие товары для геймеров.</p>
+                    <p style="font-size: 14px; color: #8a939e;">Мы - ведущий магазин игровых предметов, предлагающий лучшие товары для геймеров.</p>
                 </div>
                 <div class="footer-section">
                     <h3>Навигация</h3>
@@ -548,10 +534,9 @@
                 <div class="footer-section">
                     <h3>Поддержка</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Помощь</a></li>
-                        <li><a href="#">Контакты</a></li>
-                        <li><a href="#">Условия использования</a></li>
-                        <li><a href="#">Политика конфиденциальности</a></li>
+                        <li><a href="#" onclick="showSupport()">Помощь</a></li>
+                        <li><a href="#" onclick="showContacts()">Контакты</a></li>
+                        <li><a href="#" onclick="showTerms()">Условия использования</a></li>
                     </ul>
                 </div>
             </div>
@@ -562,6 +547,9 @@
     </footer>
 
     <script>
+        // Инициализация Telegram Web App
+        let tg = window.Telegram.WebApp;
+        
         // Функции для работы вкладок
         function initTabs() {
             const tabs = document.querySelectorAll('.tab');
@@ -603,78 +591,89 @@
             document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
         }
 
-        // Функции для авторизации через Telegram
-        function showLoginForm() {
-            document.getElementById('loginForm').style.display = 'block';
-        }
-
-        function login() {
-            const username = document.getElementById('username').value;
-            const phone = document.getElementById('phone').value;
+        // Функции для работы с Telegram
+        function initTelegram() {
+            // Расширяем на весь экран
+            tg.expand();
             
-            if (!username || !phone) {
-                alert('Пожалуйста, заполните все поля');
-                return;
-            }
+            // Устанавливаем цвет фона
+            tg.setBackgroundColor('#0f1419');
             
-            // Сохраняем данные пользователя в localStorage
-            const userData = {
-                username: username,
-                phone: phone,
-                avatar: username.charAt(0).toUpperCase(),
-                loginTime: new Date().toISOString()
-            };
+            // Получаем данные пользователя
+            const user = tg.initDataUnsafe?.user;
             
-            localStorage.setItem('telegramUser', JSON.stringify(userData));
-            
-            // Обновляем интерфейс
-            updateUserInterface();
-            
-            // Скрываем форму входа
-            document.getElementById('loginForm').style.display = 'none';
-            
-            alert(`Добро пожаловать, ${username}!`);
-        }
-
-        function logout() {
-            // Удаляем данные пользователя
-            localStorage.removeItem('telegramUser');
-            
-            // Обновляем интерфейс
-            updateUserInterface();
-            
-            alert('Вы вышли из системы');
-        }
-
-        function updateUserInterface() {
-            const userData = JSON.parse(localStorage.getItem('telegramUser'));
-            const userInfo = document.getElementById('userInfo');
-            const loginBtn = document.getElementById('loginBtn');
-            
-            if (userData) {
-                // Пользователь авторизован
-                document.getElementById('userName').textContent = userData.username;
-                document.getElementById('userAvatar').textContent = userData.avatar;
-                
-                userInfo.style.display = 'flex';
-                loginBtn.style.display = 'none';
+            if (user) {
+                // Отображаем информацию о пользователе
+                document.getElementById('userName').textContent = user.first_name || 'Пользователь';
+                document.getElementById('userAvatar').textContent = user.first_name ? user.first_name.charAt(0).toUpperCase() : 'U';
             } else {
-                // Пользователь не авторизован
-                userInfo.style.display = 'none';
-                loginBtn.style.display = 'block';
+                document.getElementById('userName').textContent = 'Гость';
             }
+            
+            // Обработчик кнопки "Назад" в Telegram
+            tg.BackButton.onClick(goBack);
+        }
+
+        function goBack() {
+            // Логика возврата на предыдущую страницу
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                tg.close();
+            }
+        }
+
+        function showCatalog() {
+            tg.showPopup({
+                title: 'Каталог товаров',
+                message: 'Здесь будет отображен полный каталог товаров',
+                buttons: [{ type: 'ok' }]
+            });
+        }
+
+        function buyItem(itemName, price) {
+            tg.showPopup({
+                title: 'Подтверждение покупки',
+                message: `Вы хотите купить "${itemName}" за ${price} ¢?`,
+                buttons: [
+                    { type: 'ok', text: 'Купить' },
+                    { type: 'cancel' }
+                ]
+            }, function(buttonId) {
+                if (buttonId === 'ok') {
+                    // Симуляция успешной покупки
+                    tg.showAlert(`Покупка "${itemName}" успешно завершена!`);
+                    
+                    // В реальном приложении здесь будет вызов метода оплаты Telegram
+                    // tg.openInvoice(url, callback);
+                }
+            });
+        }
+
+        function showSupport() {
+            tg.openTelegramLink('https://t.me/your_support_bot');
+        }
+
+        function showContacts() {
+            tg.showPopup({
+                title: 'Контакты',
+                message: 'Техническая поддержка: @your_support_bot\nEmail: support@example.com',
+                buttons: [{ type: 'ok' }]
+            });
+        }
+
+        function showTerms() {
+            tg.showPopup({
+                title: 'Условия использования',
+                message: 'Здесь будут условия использования сервиса...',
+                buttons: [{ type: 'ok' }]
+            });
         }
 
         // Инициализация при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
             initTabs();
-            updateUserInterface();
-            
-            // Проверяем авторизацию при загрузке
-            const userData = localStorage.getItem('telegramUser');
-            if (userData) {
-                console.log('Пользователь авторизован:', JSON.parse(userData));
-            }
+            initTelegram();
         });
     </script>
 </body>
