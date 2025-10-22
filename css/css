@@ -1,4 +1,4 @@
-* {
+{
     -webkit-user-select: none;  /* Запрет выделения текста */
     user-select: none;
     -webkit-tap-highlight-color: transparent; /* Убрать подсветку при тапе */
