@@ -180,6 +180,36 @@
             color: #666;
             font-size: 12px;
             border-bottom: 1px solid #2a313a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .item-image.loaded img {
+            display: block;
+        }
+
+        .item-image.loaded .image-placeholder {
+            display: none;
+        }
+
+        .image-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #2a313a;
+            color: #666;
         }
 
         .item-info {
@@ -373,16 +403,19 @@
         <section id="shop" class="tab-content active">
             <div class="hero-banner">
                 <h1>Лучшие игровые предметы</h1>
-                <p>Приобретайте эксклюзивные скины, оружие и внутреннюю валюту Standoff 2 по скидке в нашем магазине</p>
+                <p>Приобретайте эксклюзивные скины, оружие и многое другое в нашем магазине</p>
             </div>
 
             <div class="items-grid">
                 <!-- Карточка товара 1 -->
                 <div class="item-card">
-                    <div class="item-image">[Изображение предмета]</div>
+                    <div class="item-image" data-image="https://web-static.cdn.boltgaming.io/store2/properties/defaultItems/gold/cart/cartG100.webp">
+                        <img src="" alt="100 Gold">
+                        <div class="image-placeholder">[Изображение предмета]</div>
+                    </div>
                     <div class="item-info">
                         <div class="item-name">100 Gold</div>
-                        <div class="item-description">Валюта</div>
+                        <div class="item-description">Игровая валюта</div>
                         <div class="item-price">
                             <span class="price">89 ₽</span>
                             <button class="btn btn-small btn-donate" data-item="100 Gold" data-price="89">Купить</button>
@@ -392,10 +425,13 @@
 
                 <!-- Карточка товара 2 -->
                 <div class="item-card">
-                    <div class="item-image">[Изображение предмета]</div>
+                    <div class="item-image" data-image="https://via.placeholder.com/300x200/34c759/ffffff?text=500+Gold">
+                        <img src="" alt="500 Gold">
+                        <div class="image-placeholder">[Изображение предмета]</div>
+                    </div>
                     <div class="item-info">
                         <div class="item-name">500 Gold</div>
-                        <div class="item-description">Валюта</div>
+                        <div class="item-description">Игровая валюта</div>
                         <div class="item-price">
                             <span class="price">349 ₽</span>
                             <button class="btn btn-small btn-donate" data-item="500 Gold" data-price="349">Купить</button>
@@ -405,10 +441,13 @@
 
                 <!-- Карточка товара 3 -->
                 <div class="item-card">
-                    <div class="item-image">[Изображение предмета]</div>
+                    <div class="item-image" data-image="https://via.placeholder.com/300x200/ff9500/ffffff?text=1000+Gold">
+                        <img src="" alt="1000 Gold">
+                        <div class="image-placeholder">[Изображение предмета]</div>
+                    </div>
                     <div class="item-info">
                         <div class="item-name">1000 Gold</div>
-                        <div class="item-description">Валюта</div>
+                        <div class="item-description">Игровая валюта</div>
                         <div class="item-price">
                             <span class="price">799 ₽</span>
                             <button class="btn btn-small btn-donate" data-item="1000 Gold" data-price="799">Купить</button>
@@ -418,10 +457,13 @@
 
                 <!-- Карточка товара 4 -->
                 <div class="item-card">
-                    <div class="item-image">[Изображение предмета]</div>
+                    <div class="item-image" data-image="https://via.placeholder.com/300x200/ff3b30/ffffff?text=3000+Gold">
+                        <img src="" alt="3000 Gold">
+                        <div class="image-placeholder">[Изображение предмета]</div>
+                    </div>
                     <div class="item-info">
                         <div class="item-name">3000 Gold</div>
-                        <div class="item-description">Валюта</div>
+                        <div class="item-description">Игровая валюта</div>
                         <div class="item-price">
                             <span class="price">1 499 ₽</span>
                             <button class="btn btn-small btn-donate" data-item="3000 Gold" data-price="1499">Купить</button>
@@ -441,7 +483,10 @@
             <div class="items-grid">
                 <!-- Карточка товара 1 -->
                 <div class="item-card">
-                    <div class="item-image">[ТОП]</div>
+                    <div class="item-image" data-image="https://via.placeholder.com/300x200/ffcc00/000000?text=Золотой+AKR">
+                        <img src="" alt="Золотой AKR">
+                        <div class="image-placeholder">[ТОП]</div>
+                    </div>
                     <div class="item-info">
                         <div class="item-name">Золотой AKR</div>
                         <div class="item-description">Эксклюзивная версия в золотом оформлении</div>
@@ -454,7 +499,10 @@
 
                 <!-- Карточка товара 2 -->
                 <div class="item-card">
-                    <div class="item-image">[ТОП]</div>
+                    <div class="item-image" data-image="https://via.placeholder.com/300x200/8e8e93/ffffff?text=Анимационный+нож">
+                        <img src="" alt="Анимационный нож">
+                        <div class="image-placeholder">[ТОП]</div>
+                    </div>
                     <div class="item-info">
                         <div class="item-name">Анимационный нож</div>
                         <div class="item-description">Нож с уникальной анимацией вынимания</div>
@@ -477,7 +525,10 @@
             <div class="items-grid">
                 <!-- Карточка товара 1 -->
                 <div class="item-card">
-                    <div class="item-image">[АКЦИЯ -50%]</div>
+                    <div class="item-image" data-image="https://via.placeholder.com/300x200/ff2d55/ffffff?text=Набор+новичка">
+                        <img src="" alt="Набор новичка">
+                        <div class="image-placeholder">[АКЦИЯ -50%]</div>
+                    </div>
                     <div class="item-info">
                         <div class="item-name">Набор новичка</div>
                         <div class="item-description">Все необходимое для начала игры</div>
@@ -599,6 +650,28 @@
             }
         }
 
+        // Функция для загрузки изображений
+        function loadImages() {
+            const imageContainers = document.querySelectorAll('.item-image');
+            
+            imageContainers.forEach(container => {
+                const imageUrl = container.getAttribute('data-image');
+                const imgElement = container.querySelector('img');
+                const placeholder = container.querySelector('.image-placeholder');
+                
+                if (imageUrl && imgElement) {
+                    imgElement.src = imageUrl;
+                    imgElement.onload = function() {
+                        container.classList.add('loaded');
+                    };
+                    imgElement.onerror = function() {
+                        container.classList.remove('loaded');
+                        console.error('Ошибка загрузки изображения:', imageUrl);
+                    };
+                }
+            });
+        }
+
         // Функции для работы с Telegram
         function initTelegram() {
             if (!tg) {
@@ -652,9 +725,9 @@
             
             // Показываем уведомление
             if (tg && tg.showAlert) {
-                tg.showAlert(`Вы будете перенаправлены на страницу оплаты для покупки "${itemName}" за ${price} ¢`);
+                tg.showAlert(`Вы будете перенаправлены на страницу оплаты для покупки "${itemName}" за ${price} ₽`);
             } else {
-                alert(`Вы будете перенаправлены на страницу оплаты для покупки "${itemName}" за ${price} ¢`);
+                alert(`Вы будете перенаправлены на страницу оплаты для покупки "${itemName}" за ${price} ₽`);
             }
         }
 
@@ -670,7 +743,7 @@
                     if (tg && tg.showConfirm) {
                         // Используем Telegram confirm диалог
                         tg.showConfirm(
-                            `Вы хотите купить "${itemName}" за ${price} ¢?`,
+                            `Вы хотите купить "${itemName}" за ${price} ₽?`,
                             function(confirmed) {
                                 if (confirmed) {
                                     openDonatePage(itemName, price);
@@ -679,7 +752,7 @@
                         );
                     } else {
                         // Используем стандартный confirm
-                        if (confirm(`Вы хотите купить "${itemName}" за ${price} ¢?`)) {
+                        if (confirm(`Вы хотите купить "${itemName}" за ${price} ₽?`)) {
                             openDonatePage(itemName, price);
                         }
                     }
@@ -717,13 +790,10 @@
             initTabs();
             initTelegram();
             initBuyButtons();
+            loadImages();
             
             console.log('Сайт загружен и готов к работе');
         });
     </script>
 </body>
 </html>
-
-
-
-
