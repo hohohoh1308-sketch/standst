@@ -631,21 +631,30 @@
             });
         }
 
+        // ОСНОВНОЕ ИЗМЕНЕНИЕ: Функция для покупки товара
         function buyItem(itemName, price) {
             tg.showPopup({
                 title: 'Подтверждение покупки',
-                message: `Вы хотите купить "${itemName}" за ${price} ¢?`,
+                message: `Вы хотите купить "${itemName}" за ${price} ¢?\n\nВы будете перенаправлены на страницу оплаты.`,
                 buttons: [
-                    { type: 'ok', text: 'Купить' },
-                    { type: 'cancel' }
+                    { type: 'ok', text: 'Перейти к оплате' },
+                    { type: 'cancel', text: 'Отмена' }
                 ]
             }, function(buttonId) {
                 if (buttonId === 'ok') {
-                    // Симуляция успешной покупки
-                    tg.showAlert(`Покупка "${itemName}" успешно завершена!`);
+                    // Перенаправляем пользователя на сайт доната
+                    const donateUrl = 'https://donate.stream/donate_68f939cbb828e';
                     
-                    // В реальном приложении здесь будет вызов метода оплаты Telegram
-                    // tg.openInvoice(url, callback);
+                    // Используем метод Telegram для открытия внешней ссылки
+                    if (tg && tg.openLink) {
+                        tg.openLink(donateUrl);
+                    } else {
+                        // Если Telegram Web App не доступен, открываем в новом окне
+                        window.open(donateUrl, '_blank');
+                    }
+                    
+                    // Показываем уведомление о перенаправлении
+                    tg.showAlert(`Вы будете перенаправлены на страницу оплаты для покупки "${itemName}"`);
                 }
             });
         }
