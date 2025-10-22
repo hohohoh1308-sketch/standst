@@ -1,0 +1,15 @@
+* {
+    -webkit-user-select: none;  /* Запрет выделения текста */
+    user-select: none;
+    -webkit-tap-highlight-color: transparent; /* Убрать подсветку при тапе */
+    -webkit-text-size-adjust: none; /* Запрет изменения размера текста */
+    text-size-adjust: none;
+    touch-action: manipulation; /* Оптимизация для тач-устройств */
+}
+
+html, body {
+    overflow: hidden;  /* Убрать скролл */
+    position: fixed;   /* Фиксированная позиция */
+    width: 100%;       /* Фиксированная ширина */
+    height: 100%;      /* Фиксированная высота  */
+}
