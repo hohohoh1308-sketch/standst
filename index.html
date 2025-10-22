@@ -232,6 +232,14 @@
             font-size: 12px;
         }
 
+        .btn-donate {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+        }
+
+        .btn-donate:hover {
+            background: linear-gradient(45deg, #FF5252, #FF7B3A);
+        }
+
         /* Стили для футера */
         .footer {
             background-color: #1a1f25;
@@ -275,11 +283,6 @@
             margin-top: 30px;
             color: #8a939e;
             font-size: 12px;
-        }
-
-        /* Telegram-specific стили */
-        .tg-back-button {
-            display: none;
         }
 
         /* Адаптивность для мобильных устройств */
@@ -346,7 +349,7 @@
     <!-- Шапка сайта -->
     <header class="header">
         <div class="container header-content">
-            <div class="logo">LOGO</div>
+            <div class="logo">ИГРОВОЙ МАГАЗИН</div>
             
             <!-- Навигационные вкладки -->
             <div class="tabs">
@@ -371,7 +374,6 @@
             <div class="hero-banner">
                 <h1>Лучшие игровые предметы</h1>
                 <p>Приобретайте эксклюзивные скины, оружие и многое другое в нашем магазине</p>
-                <button class="btn" onclick="showCatalog()">Смотреть каталог</button>
             </div>
 
             <div class="items-grid">
@@ -383,7 +385,7 @@
                         <div class="item-description">Штурмовая винтовка с уникальным дизайном</div>
                         <div class="item-price">
                             <span class="price">1 250 ¢</span>
-                            <button class="btn btn-small" onclick="buyItem('AKR | Легион', 1250)">Купить</button>
+                            <button class="btn btn-small btn-donate" data-item="AKR | Легион" data-price="1250">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -396,7 +398,7 @@
                         <div class="item-description">Мощный пистолет с огненным оформлением</div>
                         <div class="item-price">
                             <span class="price">890 ¢</span>
-                            <button class="btn btn-small" onclick="buyItem('Пистолет | Дракон', 890)">Купить</button>
+                            <button class="btn btn-small btn-donate" data-item="Пистолет | Дракон" data-price="890">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -409,7 +411,7 @@
                         <div class="item-description">Оружие ближнего боя с анимацией</div>
                         <div class="item-price">
                             <span class="price">2 150 ¢</span>
-                            <button class="btn btn-small" onclick="buyItem('Нож | Хищник', 2150)">Купить</button>
+                            <button class="btn btn-small btn-donate" data-item="Нож | Хищник" data-price="2150">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -422,7 +424,7 @@
                         <div class="item-description">Точная винтовка для дальних дистанций</div>
                         <div class="item-price">
                             <span class="price">1 750 ¢</span>
-                            <button class="btn btn-small" onclick="buyItem('Снайперская | Призрак', 1750)">Купить</button>
+                            <button class="btn btn-small btn-donate" data-item="Снайперская | Призрак" data-price="1750">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -445,7 +447,7 @@
                         <div class="item-description">Эксклюзивная версия в золотом оформлении</div>
                         <div class="item-price">
                             <span class="price">5 000 ¢</span>
-                            <button class="btn btn-small" onclick="buyItem('Золотой AKR', 5000)">Купить</button>
+                            <button class="btn btn-small btn-donate" data-item="Золотой AKR" data-price="5000">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -458,7 +460,7 @@
                         <div class="item-description">Нож с уникальной анимацией вынимания</div>
                         <div class="item-price">
                             <span class="price">3 500 ¢</span>
-                            <button class="btn btn-small" onclick="buyItem('Анимационный нож', 3500)">Купить</button>
+                            <button class="btn btn-small btn-donate" data-item="Анимационный нож" data-price="3500">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -482,7 +484,7 @@
                         <div class="item-price">
                             <span class="price" style="color: #ff6b6b; text-decoration: line-through;">2 000 ¢</span>
                             <span class="price">1 000 ¢</span>
-                            <button class="btn btn-small" onclick="buyItem('Набор новичка', 1000)">Купить</button>
+                            <button class="btn btn-small btn-donate" data-item="Набор новичка" data-price="1000">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -548,7 +550,7 @@
 
     <script>
         // Инициализация Telegram Web App
-        let tg = window.Telegram.WebApp;
+        let tg = window.Telegram?.WebApp;
         
         // Функции для работы вкладок
         function initTabs() {
@@ -585,14 +587,26 @@
             });
             
             // Показать выбранную вкладку
-            document.getElementById(tabName).classList.add('active');
+            const targetContent = document.getElementById(tabName);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
             
             // Активировать соответствующий таб
-            document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
+            const targetTab = document.querySelector(`.tab[data-tab="${tabName}"]`);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
         }
 
         // Функции для работы с Telegram
         function initTelegram() {
+            if (!tg) {
+                console.log('Telegram Web App не доступен');
+                document.getElementById('userName').textContent = 'Гость';
+                return;
+            }
+            
             // Расширяем на весь экран
             tg.expand();
             
@@ -611,78 +625,100 @@
             }
             
             // Обработчик кнопки "Назад" в Telegram
-            tg.BackButton.onClick(goBack);
-        }
-
-        function goBack() {
-            // Логика возврата на предыдущую страницу
-            if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                tg.close();
+            if (tg.BackButton) {
+                tg.BackButton.onClick(goBack);
             }
         }
 
-        function showCatalog() {
-            tg.showPopup({
-                title: 'Каталог товаров',
-                message: 'Здесь будет отображен полный каталог товаров',
-                buttons: [{ type: 'ok' }]
-            });
+        function goBack() {
+            if (tg && tg.close) {
+                tg.close();
+            } else {
+                window.history.back();
+            }
         }
 
-        // ОСНОВНОЕ ИЗМЕНЕНИЕ: Функция для покупки товара
-        function buyItem(itemName, price) {
-            tg.showPopup({
-                title: 'Подтверждение покупки',
-                message: `Вы хотите купить "${itemName}" за ${price} ¢?\n\nВы будете перенаправлены на страницу оплаты.`,
-                buttons: [
-                    { type: 'ok', text: 'Перейти к оплате' },
-                    { type: 'cancel', text: 'Отмена' }
-                ]
-            }, function(buttonId) {
-                if (buttonId === 'ok') {
-                    // Перенаправляем пользователя на сайт доната
-                    const donateUrl = 'https://donate.stream/donate_68f939cbb828e';
+        // Функция для открытия донат страницы
+        function openDonatePage(itemName, price) {
+            const donateUrl = 'https://donate.stream/donate_68f939cbb828e';
+            
+            // Пытаемся открыть через Telegram Web App
+            if (tg && tg.openLink) {
+                tg.openLink(donateUrl);
+            } else {
+                // Если Telegram Web App не доступен, открываем в новом окне
+                window.open(donateUrl, '_blank', 'noopener,noreferrer');
+            }
+            
+            // Показываем уведомление
+            if (tg && tg.showAlert) {
+                tg.showAlert(`Вы будете перенаправлены на страницу оплаты для покупки "${itemName}" за ${price} ¢`);
+            } else {
+                alert(`Вы будете перенаправлены на страницу оплаты для покупки "${itemName}" за ${price} ¢`);
+            }
+        }
+
+        // Обработчик для кнопок "Купить"
+        function initBuyButtons() {
+            const buyButtons = document.querySelectorAll('.btn-donate');
+            
+            buyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const itemName = this.getAttribute('data-item');
+                    const price = this.getAttribute('data-price');
                     
-                    // Используем метод Telegram для открытия внешней ссылки
-                    if (tg && tg.openLink) {
-                        tg.openLink(donateUrl);
+                    if (tg && tg.showConfirm) {
+                        // Используем Telegram confirm диалог
+                        tg.showConfirm(
+                            `Вы хотите купить "${itemName}" за ${price} ¢?`,
+                            function(confirmed) {
+                                if (confirmed) {
+                                    openDonatePage(itemName, price);
+                                }
+                            }
+                        );
                     } else {
-                        // Если Telegram Web App не доступен, открываем в новом окне
-                        window.open(donateUrl, '_blank');
+                        // Используем стандартный confirm
+                        if (confirm(`Вы хотите купить "${itemName}" за ${price} ¢?`)) {
+                            openDonatePage(itemName, price);
+                        }
                     }
-                    
-                    // Показываем уведомление о перенаправлении
-                    tg.showAlert(`Вы будете перенаправлены на страницу оплаты для покупки "${itemName}"`);
-                }
+                });
             });
         }
 
+        // Вспомогательные функции
         function showSupport() {
-            tg.openTelegramLink('https://t.me/your_support_bot');
+            if (tg && tg.openTelegramLink) {
+                tg.openTelegramLink('https://t.me/your_support_bot');
+            } else {
+                alert('Техническая поддержка: @your_support_bot');
+            }
         }
 
         function showContacts() {
-            tg.showPopup({
-                title: 'Контакты',
-                message: 'Техническая поддержка: @your_support_bot\nEmail: support@example.com',
-                buttons: [{ type: 'ok' }]
-            });
+            if (tg && tg.showAlert) {
+                tg.showAlert('Техническая поддержка: @your_support_bot\nEmail: support@example.com');
+            } else {
+                alert('Техническая поддержка: @your_support_bot\nEmail: support@example.com');
+            }
         }
 
         function showTerms() {
-            tg.showPopup({
-                title: 'Условия использования',
-                message: 'Здесь будут условия использования сервиса...',
-                buttons: [{ type: 'ok' }]
-            });
+            if (tg && tg.showAlert) {
+                tg.showAlert('Здесь будут условия использования сервиса...');
+            } else {
+                alert('Здесь будут условия использования сервиса...');
+            }
         }
 
         // Инициализация при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
             initTabs();
             initTelegram();
+            initBuyButtons();
+            
+            console.log('Сайт загружен и готов к работе');
         });
     </script>
 </body>
