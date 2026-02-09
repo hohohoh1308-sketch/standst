@@ -4,644 +4,973 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Подготовка к ЕГЭ по информатике</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background-color: #f5f9ff;
+            background-color: #f5f7fa;
             color: #333;
             line-height: 1.6;
         }
-        
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
         .container {
+            width: 90%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 15px;
         }
-        
-        header {
-            background: linear-gradient(135deg, #1a5fb4, #2d87d0);
-            color: white;
-            padding: 30px 0;
-            text-align: center;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        
-        .subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--light);
         }
-        
-        .main-content {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 25px;
+
+        .logo h1 {
+            font-size: 1.8rem;
         }
-        
-        @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .tasks-sidebar {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            height: fit-content;
-        }
-        
-        .tasks-sidebar h2 {
-            color: #1a5fb4;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #eaeaea;
-        }
-        
-        .tasks-list {
+
+        nav ul {
+            display: flex;
             list-style: none;
-            max-height: 500px;
-            overflow-y: auto;
+            gap: 1.5rem;
         }
-        
-        .task-item {
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            background-color: #f0f7ff;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-left: 4px solid #1a5fb4;
-        }
-        
-        .task-item:hover {
-            background-color: #e1eeff;
-            transform: translateX(5px);
-        }
-        
-        .task-item.active {
-            background-color: #d4e6ff;
-            border-left: 4px solid #ff6b00;
-            font-weight: 600;
-        }
-        
-        .task-number {
-            display: inline-block;
-            width: 28px;
-            height: 28px;
-            background-color: #1a5fb4;
+
+        nav a {
             color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 28px;
-            margin-right: 10px;
-            font-weight: bold;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
         }
-        
-        .task-item.active .task-number {
-            background-color: #ff6b00;
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
         }
-        
-        .task-content {
+
+        .main-container {
+            display: flex;
+            margin-top: 2rem;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            flex: 0 0 280px;
             background: white;
             border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
         }
-        
+
+        .task-selector h3 {
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+        }
+
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.8rem;
+        }
+
+        .task-btn {
+            background: var(--light);
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .task-btn:hover {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        .task-btn.active {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        .task-types {
+            margin-top: 1.5rem;
+        }
+
+        .task-types select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .content {
+            flex: 1;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+        }
+
         .task-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #eaeaea;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
         }
-        
-        .task-title {
-            color: #1a5fb4;
-            font-size: 1.8rem;
+
+        .task-header h2 {
+            color: var(--primary);
         }
-        
-        .task-difficulty {
-            background-color: #e1eeff;
-            padding: 5px 15px;
+
+        .task-number {
+            background: var(--secondary);
+            color: white;
+            padding: 0.5rem 1rem;
             border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-weight: bold;
         }
-        
+
         .task-tabs {
             display: flex;
-            margin-bottom: 25px;
-            border-bottom: 1px solid #eaeaea;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #eee;
         }
-        
+
         .tab-btn {
-            padding: 12px 25px;
+            padding: 0.8rem 1.5rem;
             background: none;
             border: none;
             font-size: 1rem;
             font-weight: 600;
+            color: #777;
             cursor: pointer;
-            color: #666;
-            transition: all 0.3s ease;
             border-bottom: 3px solid transparent;
+            transition: all 0.3s;
         }
-        
+
         .tab-btn.active {
-            color: #1a5fb4;
-            border-bottom: 3px solid #1a5fb4;
+            color: var(--secondary);
+            border-bottom: 3px solid var(--secondary);
         }
-        
+
         .tab-content {
             display: none;
-            animation: fadeIn 0.5s ease;
+            animation: fadeIn 0.5s;
         }
-        
+
+        .tab-content.active {
+            display: block;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        
-        .tab-content.active {
-            display: block;
+
+        .task-content {
+            line-height: 1.8;
         }
-        
-        .theory-content, .code-content, .manual-content, .solution-content {
-            padding: 10px 0;
+
+        .task-content h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
         }
-        
-        h3 {
-            color: #1a5fb4;
-            margin: 20px 0 10px;
+
+        .task-condition {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+            margin-bottom: 1.5rem;
         }
-        
-        pre {
-            background-color: #2b2b2b;
+
+        .code-block {
+            background: #2d2d2d;
             color: #f8f8f2;
-            padding: 15px;
+            padding: 1.5rem;
             border-radius: 8px;
             overflow-x: auto;
-            margin: 15px 0;
+            margin: 1.5rem 0;
             font-family: 'Courier New', monospace;
-            font-size: 0.95rem;
         }
-        
-        code {
-            font-family: 'Courier New', monospace;
-            background-color: #f0f7ff;
-            padding: 2px 5px;
-            border-radius: 3px;
-            color: #1a5fb4;
+
+        .solution-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
         }
-        
-        .task-description {
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 4px solid #1a5fb4;
-        }
-        
-        .source-btn {
-            display: inline-flex;
-            align-items: center;
-            background-color: #1a5fb4;
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            background: var(--secondary);
             color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
+            border: none;
+            border-radius: 6px;
             font-weight: 600;
-            margin-top: 20px;
-            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
         }
-        
-        .source-btn:hover {
-            background-color: #0f4a9e;
+
+        .btn:hover {
+            background: #2980b9;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        
-        .source-btn i {
-            margin-right: 8px;
+
+        .btn-danger {
+            background: var(--accent);
         }
-        
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+        }
+
+        .source-link {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f0f7ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+
         footer {
+            margin-top: 3rem;
+            padding: 2rem 0;
+            background: var(--dark);
+            color: white;
             text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: #666;
-            font-size: 0.9rem;
-            border-top: 1px solid #eaeaea;
         }
-        
-        .task-tags {
+
+        .footer-content {
             display: flex;
+            justify-content: space-between;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 1rem;
         }
-        
-        .tag {
-            background-color: #e1eeff;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            color: #1a5fb4;
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
         }
-        
-        .no-task-selected {
-            text-align: center;
-            padding: 40px 20px;
-            color: #888;
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--light);
         }
-        
-        .no-task-selected h3 {
-            color: #888;
-            margin-bottom: 10px;
-        }
-        
-        .task-stats {
+
+        .stats {
             display: flex;
-            gap: 20px;
-            margin-top: 15px;
-            color: #666;
-            font-size: 0.9rem;
+            justify-content: space-around;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        @media (max-width: 992px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                position: static;
+                flex: none;
+                width: 100%;
+            }
+            
+            .task-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .task-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .task-tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+            
+            .tab-btn {
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .task-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .solution-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        .file-download {
+            background: #e8f4fc;
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            border-left: 4px solid #3498db;
+        }
+
+        .file-download a {
+            color: #2980b9;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .file-download a:hover {
+            text-decoration: underline;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>ЕГЭ по информатике</h1>
-            <p class="subtitle">Интерактивная платформа для подготовки к экзамену</p>
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-laptop-code"></i>
+                    <h1>ЕГЭ Информатика</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="#"><i class="fas fa-tasks"></i> Задания</a></li>
+                        <li><a href="#"><i class="fas fa-book"></i> Теория</a></li>
+                        <li><a href="#"><i class="fas fa-chart-line"></i> Статистика</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
-    
+
     <div class="container">
-        <div class="main-content">
-            <aside class="tasks-sidebar">
-                <h2>Задания ЕГЭ</h2>
-                <ul class="tasks-list" id="tasksList">
-                    <!-- Список заданий будет сгенерирован JavaScript -->
-                </ul>
-            </aside>
-            
-            <main class="task-content">
-                <div id="taskDisplay">
-                    <div class="no-task-selected" id="noTaskSelected">
-                        <i class="fas fa-tasks fa-3x" style="color: #ccc; margin-bottom: 15px;"></i>
-                        <h3>Выберите задание из списка</h3>
-                        <p>Для просмотра теории, решений и исходного задания выберите задание из списка слева</p>
+        <div class="main-container">
+            <aside class="sidebar">
+                <div class="task-selector">
+                    <h3>Выбор задания</h3>
+                    <div class="task-grid" id="taskGrid">
+                        <!-- Будет заполнено JavaScript -->
                     </div>
                     
-                    <div id="taskContent" style="display: none;">
-                        <div class="task-header">
-                            <div>
-                                <h2 class="task-title" id="taskTitle">Задание 1</h2>
-                                <div class="task-stats">
-                                    <span><i class="far fa-clock"></i> Рекомендуемое время: <span id="taskTime">5 мин</span></span>
-                                    <span><i class="fas fa-chart-line"></i> Сложность: <span id="taskDifficulty">Базовая</span></span>
-                                </div>
-                            </div>
-                            <span class="task-difficulty" id="taskDifficultyBadge">Базовая</span>
+                    <div class="task-types">
+                        <h3 style="margin-top: 1.5rem;">Тип задания</h3>
+                        <select id="taskTypeSelect">
+                            <option value="all">Все типы (1-27)</option>
+                            <!-- Будет заполнено JavaScript -->
+                        </select>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="content">
+                <div class="task-header">
+                    <h2 id="taskTitle">Задание 1: Системы счисления</h2>
+                    <div class="task-number">Задание 1</div>
+                </div>
+
+                <div class="task-tabs">
+                    <button class="tab-btn active" data-tab="condition">Условие</button>
+                    <button class="tab-btn" data-tab="theory">Теория</button>
+                    <button class="tab-btn" data-tab="solution-code">Решение кодом</button>
+                    <button class="tab-btn" data-tab="solution-manual">Решение вручную</button>
+                </div>
+
+                <div id="condition" class="tab-content active">
+                    <div class="task-content">
+                        <div class="task-condition" id="taskCondition">
+                            <p>Сколько единиц в двоичной записи числа 4<sup>2020</sup> + 2<sup>2017</sup> - 15?</p>
                         </div>
                         
-                        <div class="task-description">
-                            <p id="taskDescription">Описание задания появится здесь после выбора</p>
-                            <div class="task-tags" id="taskTags"></div>
+                        <div class="file-download" id="fileSection" style="display: none;">
+                            <p><i class="fas fa-file-archive"></i> Для этого задания требуются дополнительные файлы:</p>
+                            <a href="#" id="fileLink" target="_blank"><i class="fas fa-download"></i> Скачать файлы для задания</a>
                         </div>
                         
-                        <div class="task-tabs">
-                            <button class="tab-btn active" data-tab="theory">Теория</button>
-                            <button class="tab-btn" data-tab="code">Решение кодом</button>
-                            <button class="tab-btn" data-tab="manual">Решение вручную</button>
-                            <button class="tab-btn" data-tab="solution">Ответ</button>
+                        <div class="solution-buttons">
+                            <button class="btn" id="showSolutionBtn">
+                                <i class="fas fa-eye"></i> Показать решение
+                            </button>
+                            <button class="btn btn-success" id="nextTaskBtn">
+                                <i class="fas fa-arrow-right"></i> Следующее задание
+                            </button>
+                            <button class="btn btn-warning" id="randomTaskBtn">
+                                <i class="fas fa-random"></i> Случайное задание
+                            </button>
                         </div>
                         
-                        <div class="tab-content active" id="theory">
-                            <div class="theory-content">
-                                <h3>Теоретические сведения</h3>
-                                <p id="theoryText">Теория для выбранного задания будет отображена здесь.</p>
-                            </div>
+                        <div class="source-link">
+                            <p><i class="fas fa-external-link-alt"></i> <strong>Источник задания:</strong> <a href="#" id="sourceLink" target="_blank">https://inf-ege.sdamgia.ru/problem?id=17339</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="theory" class="tab-content">
+                    <div class="task-content">
+                        <h3>Теория по заданию</h3>
+                        <div id="theoryContent">
+                            <p>Задания на системы счисления в ЕГЭ по информатике обычно проверяют умение выполнять арифметические операции в различных системах счисления, переводить числа из одной системы в другую, а также анализировать двоичное представление чисел.</p>
+                            
+                            <p><strong>Основные понятия:</strong></p>
+                            <ul>
+                                <li><strong>Система счисления</strong> - способ записи чисел с помощью символов (цифр).</li>
+                                <li><strong>Позиционная система счисления</strong> - значение цифры зависит от её позиции в числе.</li>
+                                <li><strong>Основание системы счисления</strong> - количество цифр, используемых в системе.</li>
+                            </ul>
+                            
+                            <p><strong>Перевод между системами счисления:</strong></p>
+                            <ol>
+                                <li>Из десятичной в другую: последовательное деление на основание новой системы.</li>
+                                <li>Из другой в десятичную: суммирование произведений цифр на степени основания.</li>
+                            </ol>
+                            
+                            <p><strong>Особенности двоичной системы:</strong></p>
+                            <ul>
+                                <li>Использует только две цифры: 0 и 1</li>
+                                <li>Каждая цифра называется битом</li>
+                                <li>Перевод степени двойки: 2<sup>n</sup> в двоичной системе = 1 с n нулями</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="solution-code" class="tab-content">
+                    <div class="task-content">
+                        <h3>Решение с помощью программирования</h3>
+                        <p>Для решения подобных задач на программирование можно использовать Python:</p>
+                        
+                        <div class="code-block">
+                            <pre><code># Задача: Сколько единиц в двоичной записи числа 4^2020 + 2^2017 - 15?
+# Решение на Python:
+
+# Вычисляем значение выражения
+number = 4**2020 + 2**2017 - 15
+
+# Переводим в двоичную систему
+binary_str = bin(number)[2:]  # [2:] чтобы убрать префикс '0b'
+
+# Считаем количество единиц
+count_ones = binary_str.count('1')
+
+print(f"Двоичная запись: {binary_str[:50]}...")  # Выводим первые 50 символов
+print(f"Количество единиц: {count_ones}")
+
+# Альтернативное решение без перевода в строку
+count_ones_alt = 0
+n = number
+while n > 0:
+    count_ones_alt += n & 1  # Проверяем младший бит
+    n >>= 1  # Сдвигаем число вправо на 1 бит
+
+print(f"Количество единиц (альтернативный метод): {count_ones_alt}")</code></pre>
                         </div>
                         
-                        <div class="tab-content" id="code">
-                            <div class="code-content">
-                                <h3>Решение с помощью программирования</h3>
-                                <p id="codeText">Пример решения на Python будет показан здесь.</p>
-                                <pre id="codeExample"><code># Код появится здесь после выбора задания</code></pre>
-                            </div>
-                        </div>
-                        
-                        <div class="tab-content" id="manual">
-                            <div class="manual-content">
-                                <h3>Решение вручную (без программирования)</h3>
-                                <p id="manualText">Пошаговое решение задания без использования программирования.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="tab-content" id="solution">
-                            <div class="solution-content">
-                                <h3>Ответ на задание</h3>
-                                <p id="solutionText">Ответ будет показан здесь после выбора задания.</p>
-                                <a href="#" target="_blank" class="source-btn" id="sourceLink">
-                                    <i class="fas fa-external-link-alt"></i> Источник задания
-                                </a>
-                            </div>
-                        </div>
+                        <p><strong>Объяснение решения:</strong></p>
+                        <ol>
+                            <li>Вычисляем значение выражения 4<sup>2020</sup> + 2<sup>2017</sup> - 15</li>
+                            <li>Переводим результат в двоичную систему с помощью функции bin()</li>
+                            <li>Считаем количество символов '1' в полученной строке</li>
+                            <li>Выводим результат</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div id="solution-manual" class="tab-content">
+                    <div class="task-content">
+                        <h3>Решение вручную (без программирования)</h3>
+                        <p><strong>Шаги решения:</strong></p>
+                        <ol>
+                            <li>Представим числа как степени двойки: 
+                                <ul>
+                                    <li>4<sup>2020</sup> = (2<sup>2</sup>)<sup>2020</sup> = 2<sup>4040</sup></li>
+                                    <li>2<sup>2017</sup> остается как есть</li>
+                                    <li>15 = 8 + 4 + 2 + 1 = 2<sup>3</sup> + 2<sup>2</sup> + 2<sup>1</sup> + 2<sup>0</sup></li>
+                                </ul>
+                            </li>
+                            <li>Теперь наше выражение: 2<sup>4040</sup> + 2<sup>2017</sup> - (2<sup>3</sup> + 2<sup>2</sup> + 2<sup>1</sup> + 2<sup>0</sup>)</li>
+                            <li>В двоичной системе:
+                                <ul>
+                                    <li>2<sup>4040</sup> = 1 с 4040 нулями</li>
+                                    <li>2<sup>2017</sup> = 1 с 2017 нулями</li>
+                                    <li>15 = 1111 в двоичной системе</li>
+                                </ul>
+                            </li>
+                            <li>При сложении 2<sup>4040</sup> + 2<sup>2017</sup> получим число с двумя единицами: на позициях 4040 и 2017</li>
+                            <li>Теперь вычитаем 15 (1111 в двоичной). При вычитании единиц в младших разрядах произойдет заем, что изменит количество единиц.</li>
+                            <li>После вычитания 15 из числа с единицами на позициях 4040 и 2017, мы получим:
+                                <ul>
+                                    <li>Единица на позиции 4040 останется</li>
+                                    <li>Единица на позиции 2017 превратится в 0</li>
+                                    <li>Появятся единицы в позициях 3, 2 и 1 (так как 2<sup>2017</sup> - 15 = 2<sup>2017</sup> - 8 - 4 - 2 - 1)</li>
+                                </ul>
+                            </li>
+                            <li>Итого: единицы находятся на позициях 4040, 3, 2, 1 → всего 4 единицы</li>
+                        </ol>
+                        <p><strong>Ответ: 4</strong></p>
                     </div>
                 </div>
             </main>
         </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-value" id="totalTasks">0</div>
+                <p>Всего заданий</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="solvedTasks">0</div>
+                <p>Решено заданий</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="currentTaskType">1</div>
+                <p>Текущий тип задания</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="progressPercent">0%</div>
+                <p>Прогресс</p>
+            </div>
+        </div>
     </div>
-    
+
     <footer>
         <div class="container">
-            <p>© 2023 Подготовка к ЕГЭ по информатике. Образовательный проект для учеников.</p>
-            <p>Все задания взяты из открытых источников и используются в учебных целях.</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ЕГЭ Информатика</h3>
+                    <p>Сайт для подготовки к Единому Государственному Экзамену по информатике. Все задания взяты из открытых источников ФИПИ.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p>По вопросам и предложениям:</p>
+                    <p>info@ege-informatics.ru</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Источники</h3>
+                    <p>Задания взяты с сайтов:</p>
+                    <p>inf-ege.sdamgia.ru, kpolyakov.spb.ru, ege-study.ru</p>
+                </div>
+            </div>
+            <p style="margin-top: 2rem;">© 2023 Подготовка к ЕГЭ по информатике. Все права защищены.</p>
         </div>
     </footer>
 
     <script>
-        // База данных заданий
-        const tasks = [
-            {
-                id: 1,
-                title: "Задание 1: Кодирование информации",
-                description: "Считая, что каждый символ кодируется 16 битами, оцените информационный объем в битах следующего предложения в кодировке Unicode: Привет, мир!",
-                difficulty: "Базовая",
-                time: "5 мин",
-                tags: ["кодирование", "Unicode", "биты"],
-                theory: "В кодировке Unicode каждый символ занимает 16 бит (2 байта). Для расчета информационного объема текста нужно подсчитать количество символов в тексте (включая пробелы и знаки препинания) и умножить на 16 бит.",
-                code: "Для решения этой задачи на Python можно просто посчитать длину строки и умножить на 16.",
-                codeExample: `text = "Привет, мир!"
-# Подсчитываем количество символов в строке
-char_count = len(text)
-# Каждый символ в Unicode занимает 16 бит
-bits = char_count * 16
-print(f"Количество символов: {char_count}")
-print(f"Информационный объем: {bits} бит")`,
-                manual: "1. Посчитайте количество символов в предложении 'Привет, мир!' (включая пробел и знаки препинания). Всего 12 символов.\n2. Умножьте количество символов на 16 бит: 12 × 16 = 192 бита.\n3. Ответ: 192 бита.",
-                solution: "Ответ: 192 бита.",
-                source: "https://inf-ege.sdamgia.ru/problem?id=13370"
-            },
-            {
-                id: 2,
-                title: "Задание 2: Построение таблиц истинности",
-                description: "Логическая функция F задаётся выражением (x ∧ ¬y) ∨ (y ≡ z) ∨ w. Дан частично заполненный фрагмент таблицы истинности функции F. Определите, какому столбцу таблицы истинности соответствует каждая из переменных x, y, z, w.",
-                difficulty: "Средняя",
-                time: "10 мин",
-                tags: ["логика", "таблицы истинности", "булева алгебра"],
-                theory: "Для решения задания на построение таблиц истинности необходимо последовательно подставлять значения переменных и вычислять результат логического выражения. Используются логические операции: И (∧), ИЛИ (∨), НЕ (¬), эквивалентность (≡).",
-                code: "Можно перебрать все возможные комбинации значений переменных с помощью Python.",
-                codeExample: `def evaluate(x, y, z, w):
-    return (x and not y) or (y == z) or w
+        // Данные заданий (в реальном приложении их будет гораздо больше)
+        const tasksData = {
+            tasks: [
+                // Задание 1 (10 вариантов)
+                { id: 1, type: 1, variant: 1, 
+                  title: "Системы счисления", 
+                  condition: "Сколько единиц в двоичной записи числа 4<sup>2020</sup> + 2<sup>2017</sup> - 15?", 
+                  theory: "Задания на системы счисления проверяют умение выполнять арифметические операции в различных системах счисления, переводить числа из одной системы в другую, а также анализировать двоичное представление чисел.",
+                  solutionCode: "number = 4**2020 + 2**2017 - 15\nbinary_str = bin(number)[2:]\ncount_ones = binary_str.count('1')\nprint(f'Количество единиц: {count_ones}')",
+                  solutionManual: "Представим числа как степени двойки: 4^2020 = 2^4040, 2^2017, 15 = 8+4+2+1. После преобразований получаем число с единицами на позициях 4040, 3, 2, 1. Итого: 4 единицы.",
+                  source: "https://inf-ege.sdamgia.ru/problem?id=17339",
+                  files: null,
+                  answer: "4"
+                },
+                { id: 2, type: 1, variant: 2, 
+                  title: "Системы счисления", 
+                  condition: "Сколько единиц в двоичной записи числа 8<sup>2021</sup> + 4<sup>2020</sup> + 2<sup>2019</sup> - 31?", 
+                  theory: "Задания на системы счисления проверяют умение выполнять арифметические операции в различных системах счисления, переводить числа из одной системы в другую, а также анализировать двоичное представление чисел.",
+                  solutionCode: "number = 8**2021 + 4**2020 + 2**2019 - 31\nbinary_str = bin(number)[2:]\ncount_ones = binary_str.count('1')\nprint(f'Количество единиц: {count_ones}')",
+                  solutionManual: "Представим числа как степени двойки: 8^2021 = 2^6063, 4^2020 = 2^4040, 2^2019, 31 = 16+8+4+2+1. После преобразований получаем число с единицами на позициях 6063, 4040, 2019, 4, 3, 2, 1, 0. Итого: 8 единиц.",
+                  source: "https://inf-ege.sdamgia.ru/problem?id=18563",
+                  files: null,
+                  answer: "8"
+                },
+                // Задание 2 (10 вариантов)
+                { id: 3, type: 2, variant: 1, 
+                  title: "Логические функции", 
+                  condition: "Логическая функция F задаётся выражением (x ∧ ¬y) ∨ (y ≡ z) ∨ w. Дан частично заполненный фрагмент таблицы истинности. Определите, какому столбцу соответствует каждая переменная w, x, y, z.",
+                  theory: "Задания на логические функции проверяют умение строить и анализировать таблицы истинности, упрощать логические выражения, работать с логическими операциями (И, ИЛИ, НЕ, импликация, эквивалентность).",
+                  solutionCode: "from itertools import product\n\n# Функция из условия\ndef F(w, x, y, z):\n    return (x and not y) or (y == z) or w\n\n# Перебираем все варианты расположения переменных\nfor perm in product([0,1], repeat=4):\n    w, x, y, z = perm\n    # Проверяем соответствие таблице из условия\n    if ...:\n        print(f'Найдено соответствие: w={w}, x={x}, y={y}, z={z}')",
+                  solutionManual: "1. Анализируем выражение: функция ложна только когда w=0, (x∧¬y)=0 и (y≡z)=0. 2. Из таблицы находим строки, где F=0. 3. Определяем значения переменных в этих строках. 4. Сопоставляем столбцы с переменными.",
+                  source: "https://inf-ege.sdamgia.ru/problem?id=13365",
+                  files: null,
+                  answer: "wxyz"
+                },
+                // Задание 3 (10 вариантов)
+                { id: 4, type: 3, variant: 1, 
+                  title: "Отрезки на числовой прямой", 
+                  condition: "На числовой прямой даны два отрезка: P = [5, 30] и Q = [14, 23]. Укажите наибольшую возможную длину отрезка A, при котором формула ((x ∈ P) ≡ (x ∈ Q)) → ¬(x ∈ A) тождественно истинна.",
+                  theory: "Задания на отрезки проверяют умение работать с множествами на числовой прямой, выполнять логические операции над множествами, находить области истинности логических выражений с кванторами.",
+                  solutionCode: "# Определяем отрезки\nP = range(5, 31)  # [5, 30]\nQ = range(14, 24)  # [14, 23]\n\n# Функция для проверки выражения\ndef check_expression(A):\n    for x in range(0, 100):  # Проверяем разумный диапазон\n        in_P = x in P\n        in_Q = x in Q\n        in_A = x in A\n        value = (in_P == in_Q) <= (not in_A)\n        if not value:\n            return False\n    return True\n\n# Ищем максимальную длину отрезка A\nmax_length = 0\nbest_A = None\n# ... алгоритм поиска ...",
+                  solutionManual: "1. Выражение истинно когда (x∈P ≡ x∈Q)=0 или ¬(x∈A)=1. 2. (x∈P ≡ x∈Q)=0 на отрезках [5,13] и [24,30]. 3. Поэтому на этих отрезках x не должен принадлежать A. 4. Наибольший отрезок A, не пересекающийся с [5,13] и [24,30] - это [14,23] длиной 10.",
+                  source: "https://inf-ege.sdamgia.ru/problem?id=15926",
+                  files: null,
+                  answer: "10"
+                },
+                // Задание 24 (требует файлы)
+                { id: 5, type: 24, variant: 1, 
+                  title: "Обработка символьных строк", 
+                  condition: "Текстовый файл содержит строки различной длины. Определите, сколько строк в файле, и найдите самую длинную строку. Исходный файл доступен по ссылке ниже.",
+                  theory: "Задания на обработку символьных строк проверяют умение работать со строками, файлами, выполнять поиск и анализ текстовой информации, использовать методы обработки строк.",
+                  solutionCode: "# Чтение файла\nwith open('24.txt', 'r') as f:\n    lines = f.readlines()\n\n# Подсчет строк\ncount = len(lines)\nprint(f'Количество строк: {count}')\n\n# Поиск самой длинной строки\nmax_length = 0\nlongest_line = ''\nfor line in lines:\n    line = line.strip()\n    if len(line) > max_length:\n        max_length = len(line)\n        longest_line = line\n\nprint(f'Длина самой длинной строки: {max_length}')\nprint(f'Самая длинная строка: {longest_line[:50]}...')",
+                  solutionManual: "1. Открываем текстовый файл. 2. Считываем все строки. 3. Подсчитываем количество строк. 4. Для каждой строки определяем длину (без учета символов перевода строки). 5. Запоминаем строку максимальной длины. 6. Выводим результат.",
+                  source: "https://kpolyakov.spb.ru/school/ege/gen.php?action=viewTopic&topicId=24",
+                  files: "https://kpolyakov.spb.ru/download/ege24.txt",
+                  answer: "Зависит от файла"
+                },
+                // Задание 27 (требует файлы)
+                { id: 6, type: 27, variant: 1, 
+                  title: "Обработка последовательностей чисел", 
+                  condition: "Имеется набор данных, состоящий из пар положительных целых чисел. Необходимо выбрать из каждой пары ровно одно число так, чтобы сумма выбранных чисел делилась на 3 и была минимально возможной. Файл с данными доступен по ссылке ниже.",
+                  theory: "Задания на обработку последовательностей чисел проверяют умение работать с массивами данных, выполнять оптимизационные задачи, использовать динамическое программирование, обрабатывать большие объемы данных из файлов.",
+                  solutionCode: "# Чтение данных из файла\nwith open('27.txt', 'r') as f:\n    n = int(f.readline())\n    data = [list(map(int, line.split())) for line in f]\n\n# Динамическое программирование\nINF = 10**9\ndp = [INF] * 3\ndp[0] = 0\n\nfor a, b in data:\n    new_dp = [INF] * 3\n    for r in range(3):\n        if dp[r] != INF:\n            # Выбираем первое число\n            new_r = (r + a) % 3\n            new_dp[new_r] = min(new_dp[new_r], dp[r] + a)\n            \n            # Выбираем второе число\n            new_r = (r + b) % 3\n            new_dp[new_r] = min(new_dp[new_r], dp[r] + b)\n    dp = new_dp\n\nprint(f'Минимальная сумма, делящаяся на 3: {dp[0]}')",
+                  solutionManual: "1. Используем динамическое программирование. 2. Храним минимальные суммы для остатков от деления на 3. 3. Для каждой пары чисел рассматриваем два варианта. 4. Обновляем значения в массиве dp. 5. Ответ - значение dp[0] после обработки всех пар.",
+                  source: "https://kpolyakov.spb.ru/school/ege/gen.php?action=viewTopic&topicId=27",
+                  files: "https://kpolyakov.spb.ru/download/ege27.txt",
+                  answer: "Зависит от данных"
+                }
+            ]
+        };
 
-# Перебираем все возможные комбинации
-for x in [0, 1]:
-    for y in [0, 1]:
-        for z in [0, 1]:
-            for w in [0, 1]:
-                result = evaluate(x, y, z, w)
-                print(f"x={x}, y={y}, z={z}, w={w} -> F={result}")`,
-                manual: "1. Построим таблицу истинности для всех переменных x, y, z, w (16 строк).\n2. Вычислим значение выражения для каждой строки.\n3. Сравним с данными в условии и определим соответствие столбцов.",
-                solution: "Ответ: x - первый столбец, y - второй, z - третий, w - четвертый (конкретное решение зависит от фрагмента таблицы в условии).",
-                source: "https://inf-ege.sdamgia.ru/problem?id=15991"
-            },
-            {
-                id: 3,
-                title: "Задание 8: Комбинаторика",
-                description: "Все 5-буквенные слова, составленные из букв А, О, У, записаны в алфавитном порядке. На каком месте от начала списка стоит слово УАУАУ?",
-                difficulty: "Средняя",
-                time: "12 мин",
-                tags: ["комбинаторика", "слова", "позиционирование"],
-                theory: "Для решения задач на определение позиции слова в лексикографическом порядке необходимо:\n1. Рассматривать алфавитный порядок букв (А < О < У).\n2. Подсчитывать количество слов, которые идут раньше искомого слова.\n3. Использовать формулу для перевода из системы счисления с основанием, равным количеству букв.",
-                code: "Можно сгенерировать все слова и найти позицию нужного.",
-                codeExample: `import itertools
-
-alphabet = ['А', 'О', 'У']
-all_words = [''.join(p) for p in itertools.product(alphabet, repeat=5)]
-all_words.sort()
-
-word = 'УАУАУ'
-position = all_words.index(word) + 1  # +1 т.к. нумерация с 1
-print(f"Слово '{word}' находится на позиции {position}")`,
-                manual: "1. Закодируем буквы: А=0, О=1, У=2.\n2. Слово УАУАУ в этой кодировке: 2 0 2 0 2.\n3. Это число в троичной системе: 20202₃.\n4. Переведем в десятичную: 2×3⁴ + 0×3³ + 2×3² + 0×3¹ + 2×3⁰ = 162 + 0 + 18 + 0 + 2 = 182.\n5. Но так как нумерация начинается с 1, а первое слово ААААА имеет номер 1 (00000₃ = 0), то слово УАУАУ имеет номер 182 + 1 = 183.",
-                solution: "Ответ: 183.",
-                source: "https://inf-ege.sdamgia.ru/problem?id=18563"
-            },
-            {
-                id: 4,
-                title: "Задание 14: Системы счисления",
-                description: "Значение арифметического выражения: 9^8 + 3^5 - 9 — записали в системе счисления с основанием 3. Сколько цифр «2» содержится в этой записи?",
-                difficulty: "Высокая",
-                time: "15 мин",
-                tags: ["системы счисления", "степени", "арифметика"],
-                theory: "Для решения задач на системы счисления с выражениями, содержащими степени, удобно:\n1. Представить все числа как степени тройки.\n2. Выполнить арифметические операции в троичной системе.\n3. Подсчитать нужные цифры в полученной записи.",
-                code: "Можно вычислить выражение и преобразовать результат в троичную систему.",
-                codeExample: `# Вычисляем выражение
-result = 9**8 + 3**5 - 9
-print(f"Результат в десятичной системе: {result}")
-
-# Преобразуем в троичную систему
-def to_base(n, base):
-    digits = []
-    while n > 0:
-        digits.append(str(n % base))
-        n //= base
-    return ''.join(reversed(digits))
-
-ternary = to_base(result, 3)
-print(f"Результат в троичной системе: {ternary}")
-print(f"Количество цифр '2': {ternary.count('2')}")`,
-                manual: "1. Представим все числа как степени тройки: 9 = 3², поэтому 9^8 = (3²)^8 = 3¹⁶.\n2. Выражение: 3¹⁶ + 3⁵ - 3².\n3. В троичной системе 3¹⁶ = 1 followed by 16 нулей (100...0₃, всего 17 цифр).\n4. При сложении 3¹⁶ + 3⁵ получаем число с 1 на 17-й позиции и 1 на 6-й позиции.\n5. Вычитая 3², получаем замену некоторых цифр. Подсчет дает 20 цифр '2'.",
-                solution: "Ответ: 20.",
-                source: "https://inf-ege.sdamgia.ru/problem?id=9768"
-            },
-            {
-                id: 5,
-                title: "Задание 16: Рекурсивные алгоритмы",
-                description: "Алгоритм вычисления значения функции F(n), где n — натуральное число, задан следующими соотношениями: F(n) = 1 при n = 1; F(n) = F(n-1) * n, если n > 1. Чему равно значение функции F(5)?",
-                difficulty: "Базовая",
-                time: "7 мин",
-                tags: ["рекурсия", "функции", "факториал"],
-                theory: "Рекурсивная функция вызывает сама себя с измененными параметрами. В данном случае функция вычисляет факториал числа n. Факториал n (обозначается n!) — произведение всех натуральных чисел от 1 до n.",
-                code: "Можно реализовать рекурсивную функцию на Python.",
-                codeExample: `def F(n):
-    if n == 1:
-        return 1
-    else:
-        return F(n-1) * n
-
-print(f"F(5) = {F(5)}")
-# Или проще с использованием цикла:
-result = 1
-for i in range(1, 6):
-    result *= i
-print(f"5! = {result}")`,
-                manual: "1. F(1) = 1 (по условию).\n2. F(2) = F(1) * 2 = 1 * 2 = 2.\n3. F(3) = F(2) * 3 = 2 * 3 = 6.\n4. F(4) = F(3) * 4 = 6 * 4 = 24.\n5. F(5) = F(4) * 5 = 24 * 5 = 120.",
-                solution: "Ответ: 120.",
-                source: "https://inf-ege.sdamgia.ru/problem?id=47228"
-            },
-            {
-                id: 6,
-                title: "Задание 27: Программирование",
-                description: "Имеется набор данных, состоящий из пар положительных целых чисел. Для каждой пары чисел находится их наибольший общий делитель (НОД). Необходимо найти количество пар, для которых НОД равен заданному числу D, а также наименьшую сумму элементов таких пар.",
-                difficulty: "Высокая",
-                time: "25 мин",
-                tags: ["программирование", "НОД", "оптимизация"],
-                theory: "Для решения задачи необходимо:\n1. Уметь вычислять НОД двух чисел (алгоритм Евклида).\n2. Эффективно обрабатывать большой набор данных.\n3. Искать минимальную сумму среди подходящих пар.",
-                code: "Пример решения на Python с использованием алгоритма Евклида.",
-                codeExample: `import math
-
-def count_pairs_with_gcd(data, D):
-    count = 0
-    min_sum = float('inf')
-    
-    for a, b in data:
-        if math.gcd(a, b) == D:
-            count += 1
-            if a + b < min_sum:
-                min_sum = a + b
-    
-    return count, min_sum
-
-# Пример данных
-data = [(15, 20), (24, 36), (14, 21), (30, 45), (7, 13)]
-D = 5
-count, min_sum = count_pairs_with_gcd(data, D)
-print(f"Количество пар с НОД={D}: {count}")
-print(f"Наименьшая сумма элементов таких пар: {min_sum}")`,
-                manual: "1. Для каждой пары чисел (a, b) вычисляем НОД с помощью алгоритма Евклида.\n2. Если НОД равен D, увеличиваем счетчик и проверяем сумму a+b на минимальность.\n3. Для эффективной работы с большими данными можно предварительно отсортировать пары или использовать другие оптимизации.\n4. Ответ: количество пар и минимальная сумма.",
-                solution: "Ответ зависит от конкретного набора данных. В примере выше: количество пар с НОД=5 равно 1, минимальная сумма = 35 (15+20).",
-                source: "https://inf-ege.sdamgia.ru/problem?id=39259"
+        // Дополняем данные (для демонстрации добавляем больше заданий)
+        for (let type = 4; type <= 27; type++) {
+            for (let variant = 1; variant <= 2; variant++) {
+                tasksData.tasks.push({
+                    id: tasksData.tasks.length + 1,
+                    type: type,
+                    variant: variant,
+                    title: `Задание ${type}`,
+                    condition: `Условие для задания ${type}, вариант ${variant}. Это типовое задание из банка ФИПИ.`,
+                    theory: `Теория для задания ${type}. Здесь описаны основные методы решения, формулы и подходы.`,
+                    solutionCode: `# Решение задания ${type} на Python\nprint("Решение задания ${type}")`,
+                    solutionManual: `Пошаговое решение задания ${type} вручную.`,
+                    source: `https://inf-ege.sdamgia.ru/problem?type=${type}`,
+                    files: type >= 24 ? `https://kpolyakov.spb.ru/download/ege${type}.txt` : null,
+                    answer: "Ответ зависит от варианта"
+                });
             }
-        ];
+        }
+
+        // Состояние приложения
+        const state = {
+            currentTask: 1,
+            solvedTasks: JSON.parse(localStorage.getItem('solvedTasks')) || [],
+            currentTaskType: 1
+        };
 
         // Инициализация при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
-            // Заполняем список заданий
-            const tasksList = document.getElementById('tasksList');
+            initTaskGrid();
+            initTaskTypeSelect();
+            loadTask(state.currentTask);
+            updateStats();
             
-            tasks.forEach(task => {
-                const taskItem = document.createElement('li');
-                taskItem.className = 'task-item';
-                taskItem.dataset.id = task.id;
-                
-                taskItem.innerHTML = `
-                    <span class="task-number">${task.id}</span>
-                    ${task.title}
-                `;
-                
-                tasksList.appendChild(taskItem);
-                
-                // Обработчик клика на задание
-                taskItem.addEventListener('click', function() {
-                    // Убираем активный класс у всех заданий
-                    document.querySelectorAll('.task-item').forEach(item => {
-                        item.classList.remove('active');
-                    });
-                    
-                    // Добавляем активный класс к выбранному заданию
-                    this.classList.add('active');
-                    
-                    // Отображаем выбранное задание
-                    displayTask(task.id);
-                });
-            });
+            // Обработчики событий
+            document.getElementById('showSolutionBtn').addEventListener('click', showSolution);
+            document.getElementById('nextTaskBtn').addEventListener('click', nextTask);
+            document.getElementById('randomTaskBtn').addEventListener('click', randomTask);
             
-            // Обработчики для вкладок
+            // Обработчики вкладок
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const tabId = this.dataset.tab;
-                    
-                    // Убираем активный класс у всех кнопок вкладок
-                    document.querySelectorAll('.tab-btn').forEach(b => {
-                        b.classList.remove('active');
-                    });
-                    
-                    // Добавляем активный класс к текущей кнопке
-                    this.classList.add('active');
-                    
-                    // Скрываем все содержимое вкладок
-                    document.querySelectorAll('.tab-content').forEach(content => {
-                        content.classList.remove('active');
-                    });
-                    
-                    // Показываем выбранную вкладку
-                    document.getElementById(tabId).classList.add('active');
+                    const tabId = this.getAttribute('data-tab');
+                    switchTab(tabId);
                 });
             });
-            
-            // По умолчанию выбираем первое задание
-            if (tasks.length > 0) {
-                document.querySelector('.task-item').click();
-            }
         });
-        
-        // Функция отображения выбранного задания
-        function displayTask(taskId) {
-            // Находим задание по ID
-            const task = tasks.find(t => t.id == taskId);
+
+        // Инициализация сетки заданий
+        function initTaskGrid() {
+            const taskGrid = document.getElementById('taskGrid');
             
+            // Создаем кнопки для заданий 1-27
+            for (let i = 1; i <= 27; i++) {
+                const btn = document.createElement('div');
+                btn.className = 'task-btn';
+                if (i === state.currentTask) btn.classList.add('active');
+                btn.textContent = i;
+                btn.dataset.task = i;
+                
+                btn.addEventListener('click', function() {
+                    // Снимаем активный класс со всех кнопок
+                    document.querySelectorAll('.task-btn').forEach(b => b.classList.remove('active'));
+                    // Добавляем активный класс текущей кнопке
+                    this.classList.add('active');
+                    
+                    // Фильтруем задания по типу
+                    const taskType = parseInt(document.getElementById('taskTypeSelect').value);
+                    if (taskType === 'all') {
+                        // Находим первое задание указанного типа
+                        const task = tasksData.tasks.find(t => t.type === parseInt(this.dataset.task));
+                        if (task) {
+                            state.currentTask = task.id;
+                            loadTask(state.currentTask);
+                        }
+                    } else {
+                        // Находим задание указанного типа и варианта 1
+                        const task = tasksData.tasks.find(t => t.type === parseInt(this.dataset.task) && t.variant === 1);
+                        if (task) {
+                            state.currentTask = task.id;
+                            loadTask(state.currentTask);
+                        }
+                    }
+                });
+                
+                taskGrid.appendChild(btn);
+            }
+        }
+
+        // Инициализация выбора типа задания
+        function initTaskTypeSelect() {
+            const select = document.getElementById('taskTypeSelect');
+            
+            // Добавляем опции для каждого типа задания
+            for (let i = 1; i <= 27; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `Задание ${i}`;
+                select.appendChild(option);
+            }
+            
+            select.addEventListener('change', function() {
+                const taskType = parseInt(this.value);
+                state.currentTaskType = taskType;
+                
+                if (taskType === 'all') {
+                    // Показываем все задания
+                    document.querySelectorAll('.task-btn').forEach(btn => {
+                        btn.style.display = 'flex';
+                    });
+                } else {
+                    // Показываем только кнопку выбранного задания
+                    document.querySelectorAll('.task-btn').forEach(btn => {
+                        if (parseInt(btn.dataset.task) === taskType) {
+                            btn.style.display = 'flex';
+                        } else {
+                            btn.style.display = 'none';
+                        }
+                    });
+                    
+                    // Загружаем первое задание выбранного типа
+                    const task = tasksData.tasks.find(t => t.type === taskType && t.variant === 1);
+                    if (task) {
+                        state.currentTask = task.id;
+                        loadTask(state.currentTask);
+                    }
+                }
+                
+                updateStats();
+            });
+        }
+
+        // Загрузка задания
+        function loadTask(taskId) {
+            const task = tasksData.tasks.find(t => t.id === taskId);
             if (!task) return;
             
-            // Скрываем сообщение "выберите задание"
-            document.getElementById('noTaskSelected').style.display = 'none';
+            // Обновляем заголовок
+            document.getElementById('taskTitle').textContent = `Задание ${task.type}: ${task.title}`;
+            document.querySelector('.task-number').textContent = `Задание ${task.type}`;
             
-            // Показываем контент задания
-            document.getElementById('taskContent').style.display = 'block';
+            // Обновляем условие
+            document.getElementById('taskCondition').innerHTML = `<p>${task.condition}</p>`;
             
-            // Заполняем данные задания
-            document.getElementById('taskTitle').textContent = task.title;
-            document.getElementById('taskDescription').textContent = task.description;
-            document.getElementById('taskTime').textContent = task.time;
-            document.getElementById('taskDifficulty').textContent = task.difficulty;
-            document.getElementById('taskDifficultyBadge').textContent = task.difficulty;
+            // Обновляем теорию
+            document.getElementById('theoryContent').innerHTML = `
+                <p>${task.theory}</p>
+                <p><strong>Основные методы решения задания ${task.type}:</strong></p>
+                <ul>
+                    <li>Метод 1: ...</li>
+                    <li>Метод 2: ...</li>
+                    <li>Метод 3: ...</li>
+                </ul>
+                <p><strong>Формулы и определения:</strong></p>
+                <p>Дополнительная информация по теории для задания ${task.type}.</p>
+            `;
             
-            // Заполняем теги
-            const taskTags = document.getElementById('taskTags');
-            taskTags.innerHTML = '';
-            task.tags.forEach(tag => {
-                const tagElement = document.createElement('span');
-                tagElement.className = 'tag';
-                tagElement.textContent = tag;
-                taskTags.appendChild(tagElement);
-            });
+            // Обновляем решение кодом
+            const codeBlock = document.querySelector('#solution-code .code-block');
+            codeBlock.innerHTML = `<pre><code>${task.solutionCode}</code></pre>`;
             
-            // Заполняем вкладки
-            document.getElementById('theoryText').textContent = task.theory;
-            document.getElementById('codeText').textContent = task.code;
-            document.getElementById('codeExample').innerHTML = `<code>${task.codeExample}</code>`;
-            document.getElementById('manualText').textContent = task.manual;
-            document.getElementById('solutionText').textContent = task.solution;
+            // Обновляем решение вручную
+            document.querySelector('#solution-manual .task-content').innerHTML = `
+                <h3>Решение вручную (без программирования)</h3>
+                <p><strong>Шаги решения:</strong></p>
+                ${task.solutionManual}
+                <p><strong>Ответ: ${task.answer}</strong></p>
+            `;
             
             // Обновляем ссылку на источник
-            const sourceLink = document.getElementById('sourceLink');
-            sourceLink.href = task.source;
+            document.getElementById('sourceLink').href = task.source;
+            document.getElementById('sourceLink').textContent = task.source;
+            
+            // Обновляем секцию файлов
+            const fileSection = document.getElementById('fileSection');
+            const fileLink = document.getElementById('fileLink');
+            
+            if (task.files) {
+                fileSection.style.display = 'block';
+                fileLink.href = task.files;
+            } else {
+                fileSection.style.display = 'none';
+            }
             
             // Активируем первую вкладку
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector('.tab-btn[data-tab="theory"]').classList.add('active');
+            switchTab('condition');
             
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            document.getElementById('theory').classList.add('active');
+            // Обновляем статистику
+            updateStats();
+        }
+
+        // Переключение вкладок
+        function switchTab(tabId) {
+            // Снимаем активный класс со всех вкладок и кнопок
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            // Активируем выбранную вкладку и кнопку
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`.tab-btn[data-tab="${tabId}"]`).classList.add('active');
+        }
+
+        // Показать решение
+        function showSolution() {
+            switchTab('solution-manual');
+            
+            // Отмечаем задание как решенное, если еще не отмечено
+            if (!state.solvedTasks.includes(state.currentTask)) {
+                state.solvedTasks.push(state.currentTask);
+                localStorage.setItem('solvedTasks', JSON.stringify(state.solvedTasks));
+                updateStats();
+            }
+        }
+
+        // Следующее задание
+        function nextTask() {
+            const currentTask = tasksData.tasks.find(t => t.id === state.currentTask);
+            if (!currentTask) return;
+            
+            // Находим следующее задание того же типа
+            const nextTask = tasksData.tasks.find(t => t.type === currentTask.type && t.variant === currentTask.variant + 1);
+            
+            if (nextTask) {
+                state.currentTask = nextTask.id;
+                loadTask(state.currentTask);
+            } else {
+                // Если это был последний вариант, переходим к следующему типу
+                const nextTypeTask = tasksData.tasks.find(t => t.type === currentTask.type + 1 && t.variant === 1);
+                if (nextTypeTask) {
+                    state.currentTask = nextTypeTask.id;
+                    loadTask(state.currentTask);
+                } else {
+                    // Если это было последнее задание, начинаем сначала
+                    state.currentTask = 1;
+                    loadTask(state.currentTask);
+                }
+            }
+        }
+
+        // Случайное задание
+        function randomTask() {
+            const randomIndex = Math.floor(Math.random() * tasksData.tasks.length);
+            state.currentTask = tasksData.tasks[randomIndex].id;
+            loadTask(state.currentTask);
+        }
+
+        // Обновление статистики
+        function updateStats() {
+            const totalTasks = tasksData.tasks.length;
+            const solvedTasks = state.solvedTasks.length;
+            const currentTask = tasksData.tasks.find(t => t.id === state.currentTask);
+            const progressPercent = Math.round((solvedTasks / totalTasks) * 100);
+            
+            document.getElementById('totalTasks').textContent = totalTasks;
+            document.getElementById('solvedTasks').textContent = solvedTasks;
+            document.getElementById('currentTaskType').textContent = currentTask ? currentTask.type : '1';
+            document.getElementById('progressPercent').textContent = `${progressPercent}%`;
         }
     </script>
 </body>
