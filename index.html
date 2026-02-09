@@ -3,1094 +3,820 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OCTOPUS SMOKE| Главная</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Тригонометрическая таблица 0°-180°</title>
     <style>
-        /* Базовые настройки и сброс стилей */
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
-            background-color: #0f1419;
-            color: #e0e0e0;
-            line-height: 1.6;
-            padding-top: env(safe-area-inset-top);
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
         }
-
-        /* Стили для шапки */
-        .header {
-            background-color: #1a1f25;
-            padding: 12px 0;
-            border-bottom: 1px solid #2a313a;
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        button.active {
+            background-color: #2ecc71;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+        }
+        
+        th {
+            background-color: #2c3e50;
+            color: white;
+            padding: 18px 8px;
+            text-align: center;
+            font-size: 17px;
             position: sticky;
             top: 0;
-            z-index: 100;
         }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 20px;
-            font-weight: bold;
-            color: #e5efff;
-            font-family: ObelixPro;
-        }
-
-        /* Стили для навигационных вкладок */
-        .tabs {
-            display: flex;
-            gap: 0;
-            background-color: #1a1f25;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .tab {
-            padding: 12px 20px;
-            cursor: pointer;
-            color: #b0b7c3;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border-bottom: 2px solid transparent;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .tab:hover {
-            color: #fff;
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .tab.active {
-            color: #4a8bff;
-            border-bottom: 2px solid #4a8bff;
-        }
-
-        /* Стили для содержимого вкладок */
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Стили для блока пользователя */
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .user-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #4a8bff, #8a2be2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .user-name {
-            color: #b0b7c3;
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        /* Стили для баннера */
-        .hero-banner {
-            background: linear-gradient(135deg, #1a2a3a 0%, #2a3a4a 100%);
-            padding: 40px 0;
+        
+        td {
+            padding: 15px 8px;
             text-align: center;
-            margin-bottom: 30px;
-            border-radius: 0 0 10px 10px;
+            border-bottom: 1px solid #eee;
+            font-size: 16px;
+            transition: background-color 0.3s;
         }
-
-        .hero-banner h1 {
-            font-size: 2rem;
-            margin-bottom: 12px;
-            color: white;
+        
+        tr:hover {
+            background-color: #f8f9fa;
         }
-
-        .hero-banner p {
-            font-size: 1rem;
-            color: #b0b7c3;
-            max-width: 600px;
-            margin: 0 auto 20px;
+        
+        .angle-cell {
+            background-color: #f1f8ff;
+            font-weight: bold;
+            color: #2c3e50;
         }
-
-        /* Стили для сетки товаров */
-        .items-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 15px;
-            margin-bottom: 40px;
-        }
-
-        .item-card {
-            background: linear-gradient(145deg, #1a1f25, #161a1f);
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid #2a313a;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .item-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            border-color: #4a8bff;
-        }
-
-        .item-image {
-            width: 100%;
-            height: 140px;
-            background-color: #2a313a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            font-size: 12px;
-            border-bottom: 1px solid #2a313a;
+        
+        .practice-mode .value-cell {
+            background-color: #fffde7;
+            cursor: pointer;
             position: relative;
-            overflow: hidden;
         }
-
-        .item-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        
+        .practice-mode .value-cell.hidden span {
+            visibility: hidden;
+        }
+        
+        .practice-mode .value-cell.hidden::after {
+            content: "?";
+            position: absolute;
+            left: 0;
+            right: 0;
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .value-cell.correct {
+            background-color: #d4edda !important;
+            color: #155724;
+        }
+        
+        .value-cell.incorrect {
+            background-color: #f8d7da !important;
+            color: #721c24;
+        }
+        
+        .function-explanation {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .func-card {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+        
+        .func-card h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+        
+        .func-card p {
+            margin: 0;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .func-sin { border-left: 4px solid #3498db; }
+        .func-cos { border-left: 4px solid #2ecc71; }
+        .func-tan { border-left: 4px solid #e74c3c; }
+        .func-ctg { border-left: 4px solid #9b59b6; }
+        
+        .explanation {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        
+        .explanation h3 {
+            color: #2c3e50;
+            margin-top: 0;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .memory-rules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .rule {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .rule h4 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        
+        .quiz-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             display: none;
         }
-
-        .item-image.loaded img {
+        
+        .quiz-container.active {
             display: block;
         }
-
-        .item-image.loaded .image-placeholder {
-            display: none;
+        
+        .quiz-question {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #2c3e50;
         }
-
-        .image-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #2a313a;
-            color: #666;
+        
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
         }
-
-        .item-info {
-            padding: 12px;
+        
+        .quiz-option {
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-size: 18px;
         }
-
-        .item-name {
-            font-size: 16px;
-            margin-bottom: 6px;
-            color: #fff;
+        
+        .quiz-option:hover {
+            background-color: #e9ecef;
+            transform: translateY(-3px);
         }
-
-        .item-description {
-            font-size: 12px;
-            color: #8a939e;
-            margin-bottom: 10px;
-            line-height: 1.4;
+        
+        .quiz-option.correct {
+            background-color: #d4edda;
+            color: #155724;
         }
-
-        .item-price {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        
+        .quiz-option.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
         }
-
-        .price {
+        
+        .quiz-result {
             font-size: 18px;
             font-weight: bold;
-            color: #4a8bff;
-        }
-
-        .btn {
-            background-color: #4a8bff;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-            font-size: 14px;
-        }
-
-        .btn:hover {
-            background-color: #3a7be0;
-        }
-
-        .btn-small {
-            padding: 6px 10px;
-            font-size: 12px;
-        }
-
-        .btn-donate {
-            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
-        }
-
-        .btn-donate:hover {
-            background: linear-gradient(45deg, #FF5252, #FF7B3A);
-        }
-
-        /* Стили для футера */
-        .footer {
-            background-color: #1a1f25;
-            padding: 30px 0;
-            border-top: 1px solid #2a313a;
-            margin-top: 40px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-        }
-
-        .footer-section h3 {
-            color: #fff;
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 8px;
-        }
-
-        .footer-links a {
-            color: #8a939e;
-            transition: color 0.3s ease;
-            font-size: 14px;
-        }
-
-        .footer-links a:hover {
-            color: #4a8bff;
-        }
-
-        .copyright {
             text-align: center;
-            margin-top: 30px;
-            color: #8a939e;
-            font-size: 12px;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
         }
-
-        /* Адаптивность для мобильных устройств */
+        
+        .quiz-result.correct {
+            background-color: #d4edda;
+            color: #155724;
+            display: block;
+        }
+        
+        .quiz-result.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+        
+        .relationship {
+            background-color: #fffde7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid #f39c12;
+        }
+        
+        .relationship h4 {
+            margin-top: 0;
+            color: #d35400;
+        }
+        
         @media (max-width: 768px) {
-            .header-content {
+            .controls {
                 flex-direction: column;
-                gap: 12px;
+                align-items: center;
             }
-
-            .tabs {
+            
+            button {
                 width: 100%;
-                justify-content: flex-start;
-            }
-
-            .tab {
-                padding: 10px 15px;
-                font-size: 14px;
-            }
-
-            .hero-banner {
-                padding: 30px 0;
-            }
-
-            .hero-banner h1 {
-                font-size: 1.5rem;
-            }
-
-            .hero-banner p {
-                font-size: 0.9rem;
-            }
-
-            .items-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-                gap: 12px;
-            }
-
-            .item-image {
-                height: 120px;
-            }
-
-            .user-info {
-                flex-direction: row;
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 10px;
+                max-width: 300px;
             }
             
-            .items-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .quiz-options {
+                grid-template-columns: 1fr;
             }
             
-            .tab {
-                padding: 8px 12px;
-                font-size: 13px;
+            .memory-rules {
+                grid-template-columns: 1fr;
+            }
+            
+            .function-explanation {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Шапка сайта -->
-    <header class="header">
-        <div class="container header-content">
-            <div class="logo">OCTOPUS SMOKE</div>
-            
-            <!-- Навигационные вкладки -->
-            <div class="tabs">
-                <div class="tab active" data-tab="shop">Магазин</div>
-                <div class="tab" data-tab="top">Топ товаров</div>
-                <div class="tab" data-tab="sales">Акции</div>
-                <div class="tab" data-tab="about">О нас</div>
+    <h1>Тригонометрическая таблица 0°-180°</h1>
+    <p class="subtitle">Изучите значения синуса, косинуса, тангенса и котангенса для основных углов</p>
+    
+    <div class="app-container">
+        <div class="function-explanation">
+            <div class="func-card func-sin">
+                <h4>sin(θ) = противолежащий/гипотенуза</h4>
+                <p>Синус угла - отношение противолежащего катета к гипотенузе</p>
             </div>
-
-            <!-- Блок пользователя -->
-            <div class="user-info" id="userInfo">
-                <div class="user-avatar" id="userAvatar">U</div>
-                <span class="user-name" id="userName">Загрузка...</span>
+            <div class="func-card func-cos">
+                <h4>cos(θ) = прилежащий/гипотенуза</h4>
+                <p>Косинус угла - отношение прилежащего катета к гипотенузе</p>
+            </div>
+            <div class="func-card func-tan">
+                <h4>tan(θ) = sin/cos</h4>
+                <p>Тангенс угла - отношение синуса к косинусу</p>
+            </div>
+            <div class="func-card func-ctg">
+                <h4>ctg(θ) = cos/sin = 1/tan</h4>
+                <p>Котангенс - отношение косинуса к синусу, обратный тангенсу</p>
             </div>
         </div>
-    </header>
-
-    <!-- Основной контент -->
-    <main class="container">
-        <!-- Содержимое вкладки "Магазин" -->
-        <section id="shop" class="tab-content active">
-            <div class="hero-banner">
-                <h1>Лучший магазин в ТВОЁМ городе</h1>
-                <p>Приобретайте по эксклюзивным ценам</p>
-            </div>
-
-            <div class="items-grid">
-                <!-- Карточка товара 1 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/11d9bf55-c6f8-469c-91f8-ff2947a36f76">
-                        <img src="" alt="ANGRY VAPE">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">ANGRY VAPE</div>
-                        <div class="item-description">Жидкость 50MG</div>
-                        <div class="item-price">
-                            <span class="price">350 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="ANGRY VAPE" data-price="350">Купить</button>
-                        </div>
-                    </div>
-                </div>
-
-                
-
-                <!-- Карточка товара 2 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/ddcaffd9-90c0-47ed-aada-375e29824121">
-                        <img src="" alt="CATSWILL">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">CATSWILL</div>
-                        <div class="item-description">Жидкость 60MG</div>
-                        <div class="item-price">
-                            <span class="price">400 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="CATSWILL" data-price="400">Купить</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Карточка товара 3 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/9e04d7dc-5815-4f79-a071-8362314575fe">
-                        <img src="" alt="D.L.T.A">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">D.L.T.A</div>
-                        <div class="item-description">Жидкость 50MG</div>
-                        <div class="item-price">
-                            <span class="price">370 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="D.L.T.A" data-price="370">Купить</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/2e1e11cc-5119-413a-93b0-41ec1cbee2f8">
-                        <img src="" alt="DOTA">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">DOTA</div>
-                        <div class="item-description">Жидкость 60MG</div>
-                        <div class="item-price">
-                            <span class="price">370 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="DOTA" data-price="370">Купить</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/c611de80-3345-419b-865d-cf050eab15e6">
-                        <img src="" alt="DUALL">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">DUALL</div>
-                        <div class="item-description">Жидкость 50MG</div>
-                        <div class="item-price">
-                            <span class="price">350 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="DUALL" data-price="350">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/92e26fcb-9988-4cef-bdce-180b25b415f7">
-                        <img src="" alt="HOTSPOT">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">HOTSPOT MORPH</div>
-                        <div class="item-description">Жидкость 50MG</div>
-                        <div class="item-price">
-                            <span class="price">370 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="HOTSPOT MORPH" data-price="370">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/b01ebedc-e05b-450b-ae2e-fee42dc4cdf9">
-                        <img src="" alt="HOTSPOT Кислый">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">HOTSPOT Кислый</div>
-                        <div class="item-description">Жидкость 50MG</div>
-                        <div class="item-price">
-                            <span class="price">400 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="HOTSPOT Кислый" data-price="400">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/b17e5d7a-6910-4ecf-a2b6-c8e6388151b1">
-                        <img src="" alt="АНАРХИЯ">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">АНАРХИЯ</div>
-                        <div class="item-description">Жидкость 70MG</div>
-                        <div class="item-price">
-                            <span class="price">400 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="АНАРХИЯ" data-price="400">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/ee941b7c-a04a-4de4-a290-ad0850aa9df1">
-                        <img src="" alt="ЗЛАЯ МОНАШКА КИСЛАЯ">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">ЗЛАЯ МОНАШКА КИСЛАЯ</div>
-                        <div class="item-description">Жидкость 70MG</div>
-                        <div class="item-price">
-                            <span class="price">400 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="ЗЛАЯ МОНАШКА КИСЛАЯ" data-price="400">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/00a65092-123d-439d-bae2-905d7ea2311e">
-                        <img src="" alt="AEGIS BOOST 3">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">AEGIS BOOST 3</div>
-                        <div class="item-description">ПОДСИСТЕМА</div>
-                        <div class="item-price">
-                            <span class="price">2 199 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="AEGIS BOOST 3" data-price="2 199">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/6d2f43c8-96f1-44d9-8de5-e7706fe5fbde">
-                        <img src="" alt="AEGIS BOOST 2">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">AEGIS BOOST 2</div>
-                        <div class="item-description">ПОДСИСТЕМА</div>
-                        <div class="item-price">
-                            <span class="price">1 299 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="AEGIS BOOST 2" data-price="1 299">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/ebc3b135-f428-4ac6-87e4-379a02d72173">
-                        <img src="" alt="AEGIS BOOST 2 PRO">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">AEGIS BOOST 2 PRO</div>
-                        <div class="item-description">ПОДСИСТЕМА</div>
-                        <div class="item-price">
-                            <span class="price">1 499 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="AEGIS BOOST 2 PRO" data-price="1 499">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/e9a2bb5e-f298-41f9-81a0-61bdfe51591a">
-                        <img src="" alt="AEGIS HERO 2">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">AEGIS HERO 2</div>
-                        <div class="item-description">ПОДСИСТЕМА</div>
-                        <div class="item-price">
-                            <span class="price">1 199 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="AEGIS HERO 2" data-price="1 199">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/1b92569a-0524-4480-ad31-a2acf6c9bd38">
-                        <img src="" alt="AEGIS HERO 3">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">AEGIS HERO 3</div>
-                        <div class="item-description">ПОДСИСТЕМА</div>
-                        <div class="item-price">
-                            <span class="price">1 399 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="AEGIS HERO 3" data-price="1 399">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/b7b74b44-4f1e-4263-90ca-584bb69aa703">
-                        <img src="" alt="AEGIS HERO 5">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">AEGIS HERO 5</div>
-                        <div class="item-description">ПОДСИСТЕМА</div>
-                        <div class="item-price">
-                            <span class="price">1 499 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="AEGIS HERO 5" data-price="1499">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/cbd43547-e449-4bd6-9439-e8b16ccdff24">
-                        <img src="" alt="XROS 3 MINI">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">XROS 3 MINI</div>
-                        <div class="item-description">ПОДСИСТЕМА</div>
-                        <div class="item-price">
-                            <span class="price">1 099 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="XROS 3 MINI" data-price="1 099">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/48bed2a0-e9a6-4b8f-be7e-fdedcbcfb85b">
-                        <img src="" alt="XROS 4">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">XROS 4</div>
-                        <div class="item-description">ПОДСИСТЕМА</div>
-                        <div class="item-price">
-                            <span class="price">1 199 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="XROS 4" data-price="1 199">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/fd870858-4f36-43c6-a195-111554c9a94d">
-                        <img src="" alt="XROS 4 MINI">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">XROS 4 MINI</div>
-                        <div class="item-description">ПОДСИСТЕМА</div>
-                        <div class="item-price">
-                            <span class="price">1 199 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="XROS 4 MINI" data-price="1 199">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/1299d67a-4d17-4ece-9706-831705789561">
-                        <img src="" alt="XROS 5">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">XROS 5</div>
-                        <div class="item-description">ПОДСИСТЕМА</div>
-                        <div class="item-price">
-                            <span class="price">1 299 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="XROS 5" data-price="1 299">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/fa5d6b73-4a91-4b04-ba19-323b23906e90">
-                        <img src="" alt="ARC 16000 ТЯГ">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">ARC 16000 ТЯГ</div>
-                        <div class="item-description">ОДНОРАЗКА 50 MG</div>
-                        <div class="item-price">
-                            <span class="price">799 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="ARC 16000 ТЯГ" data-price="799">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/7c1484af-89dc-4cf2-8020-8f2e1f98d1c4">
-                        <img src="" alt="HQD 5000 ТЯГ">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">HQD 5000 ТЯГ</div>
-                        <div class="item-description">ОДНОРАЗКА 50 MG</div>
-                        <div class="item-price">
-                            <span class="price">599 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="HQD 5000 ТЯГ" data-price="599">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/53a09ff9-0d91-403e-b14b-575f1b3c3cad">
-                        <img src="" alt="ELFBAR 1800 ТЯГ">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">ELFBAR 1800 ТЯГ</div>
-                        <div class="item-description">ОДНОРАЗКА 50 MG</div>
-                        <div class="item-price">
-                            <span class="price">599 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="ELFBAR 1800 ТЯГ" data-price="599">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/d212530b-389d-4a7a-b1a0-91f56d77a099">
-                        <img src="" alt="WAKA 15000">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">WAKA 15000</div>
-                        <div class="item-description">ОДНОРАЗКА 70 MG</div>
-                        <div class="item-price">
-                            <span class="price">999 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="WAKA 15000" data-price="999">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/944bcd2b-3ec4-49f0-9dd4-c7429de25f6a">
-                        <img src="" alt="WAKA 2300 ТЯГ">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">WAKA 2300 ТЯГ</div>
-                        <div class="item-description">ОДНОРАЗКА 50 MG</div>
-                        <div class="item-price">
-                            <span class="price">599 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="WAKA 2300 ТЯГ" data-price="599">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/3f07ecfd-d9a9-456d-ae3f-8f6078a1b7ad">
-                        <img src="" alt="WAKA 25000 ТЯГ">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">WAKA 25000 ТЯГ</div>
-                        <div class="item-description">ОДНОРАЗКА 70 MG</div>
-                        <div class="item-price">
-                            <span class="price">999 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="WAKA 25000 ТЯГ" data-price="999">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Карточка товара 4 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://miniature-prod.moysklad.ru/miniature/62d59eb2-278b-11f0-0a80-075b0001aed8/documentminiature/d64c7a6a-3420-4704-b262-f40de5aacee1">
-                        <img src="" alt="WAKA 38000 ТЯГ">
-                        <div class="image-placeholder">[Изображение предмета]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">WAKA 38000 ТЯГ</div>
-                        <div class="item-description">ОДНОРАЗКА 70 MG</div>
-                        <div class="item-price">
-                            <span class="price">1 199 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="WAKA 38000 ТЯГ" data-price="1 199">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-        </section>
-
         
-
-        <!-- Содержимое вкладки "Акции" -->
-        <section id="sales" class="tab-content">
-            <div class="hero-banner">
-                <h1>Специальные предложения</h1>
-                <p>Воспользуйтесь выгодными акциями и скидками</p>
+        <div class="controls">
+            <button id="showAllBtn" class="active">Показать всю таблицу</button>
+            <button id="practiceBtn">Режим заучивания</button>
+            <button id="quizBtn">Проверка знаний</button>
+            <button id="resetBtn">Сбросить</button>
+        </div>
+        
+        <div class="table-container">
+            <table id="trigTable">
+                <thead>
+                    <tr>
+                        <th>Угол (°)</th>
+                        <th>Угол (рад)</th>
+                        <th>sin(θ)</th>
+                        <th>cos(θ)</th>
+                        <th>tan(θ)</th>
+                        <th>ctg(θ)</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Таблица будет заполнена JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="quiz-container" id="quizContainer">
+            <div class="quiz-question" id="quizQuestion"></div>
+            <div class="quiz-options" id="quizOptions"></div>
+            <div class="quiz-result" id="quizResult"></div>
+        </div>
+        
+        <div class="explanation">
+            <h3>Помощь в запоминании</h3>
+            
+            <div class="relationship">
+                <h4>Важные соотношения</h4>
+                <p>ctg(θ) = 1/tan(θ) • ctg(θ) = cos(θ)/sin(θ) • tan(θ) × ctg(θ) = 1</p>
+                <p>Если sin(θ) = 0 → ctg(θ) не существует • Если cos(θ) = 0 → tan(θ) не существует</p>
             </div>
-
-            <div class="items-grid">
-                <!-- Карточка товара 1 -->
-                <div class="item-card">
-                    <div class="item-image" data-image="https://tse1.mm.bing.net/th/id/OIP.8-doPcGzjhHScHjL5GZ96AHaHm?rs=1&pid=ImgDetMain&o=7&rm=3">
-                        <img src="" alt="Набор новичка">
-                        <div class="image-placeholder">[АКЦИЯ -20%]</div>
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">СПРАШИВАТЬ У ПРОДАВЦА</div>
-                        <div class="item-description">СКИДКА -20%</div>
-                        <div class="item-price">
-                            <span class="price" style="color: #ff6b6b; text-decoration: line-through;">1 000 ₽</span>
-                            <span class="price">800 ₽</span>
-                            <button class="btn btn-small btn-donate" data-item="Набор новичка" data-price="1000">Купить</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Содержимое вкладки "О нас" -->
-        <section id="about" class="tab-content">
-            <div class="hero-banner">
-                <h1>О нашем магазине</h1>
-                <p>Узнайте больше о нашей компании и принципах работы</p>
-            </div>
-
-            <div style="max-width: 800px; margin: 0 auto; padding: 30px 0;">
-                <h2 style="margin-bottom: 15px; color: #4a8bff; font-size: 20px;">Наша миссия</h2>
-                <p style="margin-bottom: 25px; font-size: 15px; line-height: 1.6;">
-                    Мы - ведущий магазин SMOKE систем, предлагающий лучшие товары прямо от поставщика. 
-                    Наша цель - обеспечить безопасные и выгодные сделки для всех участников.
-                </p>
-
-                <h2 style="margin-bottom: 15px; color: #4a8bff; font-size: 20px;">Почему мы?</h2>
-                <ul style="list-style: none; padding: 0;">
-                    <li style="padding: 8px 0; border-bottom: 1px solid #2a313a;">✅ Гарантия безопасности сделок</li>
-                    <li style="padding: 8px 0; border-bottom: 1px solid #2a313a;">✅ Мгновенная доставка</li>
-                    <li style="padding: 8px 0; border-bottom: 1px solid #2a313a;">✅ Поддержка 24/7</li>
-                    <li style="padding: 8px 0; border-bottom: 1px solid #2a313a;">✅ Лучшие цены на рынке</li>
-                </ul>
-            </div>
-        </section>
-    </main>
-
-    <!-- Подвал сайта -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>О нас</h3>
-                    <p style="font-size: 14px; color: #8a939e;">Мы - ведущий магазин в Росии, предлагающий лучшие товары.</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Навигация</h3>
-                    <ul class="footer-links">
-                        <li><a href="#" class="tab-link" data-tab="shop">Магазин</a></li>
-                        <li><a href="#" class="tab-link" data-tab="top">Топ товаров</a></li>
-                        <li><a href="#" class="tab-link" data-tab="sales">Акции</a></li>
-                        <li><a href="#" class="tab-link" data-tab="about">О нас</a></li>
+            
+            <div class="memory-rules">
+                <div class="rule">
+                    <h4>Основные углы (0°, 30°, 45°, 60°, 90°)</h4>
+                    <ul>
+                        <li><strong>sin:</strong> 0, 1/2, √2/2, √3/2, 1</li>
+                        <li><strong>cos:</strong> 1, √3/2, √2/2, 1/2, 0</li>
+                        <li><strong>tan:</strong> 0, 1/√3, 1, √3, не опр.</li>
+                        <li><strong>ctg:</strong> не опр., √3, 1, 1/√3, 0</li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h3>Поддержка</h3>
-                    <ul class="footer-links">
-                        <li><a href="#" onclick="showSupport()">Помощь</a></li>
-                        <li><a href="#" onclick="showContacts()">Контакты</a></li>
-                        <li><a href="#" onclick="showTerms()">Условия использования</a></li>
+                
+                <div class="rule">
+                    <h4>Формулы приведения (120°, 135°, 150°, 180°)</h4>
+                    <p>Для углов во II четверти (90°-180°):</p>
+                    <ul>
+                        <li>sin(180°-θ) = sin(θ)</li>
+                        <li>cos(180°-θ) = -cos(θ)</li>
+                        <li>tan(180°-θ) = -tan(θ)</li>
+                        <li>ctg(180°-θ) = -ctg(θ)</li>
                     </ul>
                 </div>
-            </div>
-            <div class="copyright">
-                &copy; 2025 Магазин. Все права защищены.
+                
+                <div class="rule">
+                    <h4>Особые значения и закономерности</h4>
+                    <ul>
+                        <li>sin(0°)=0, sin(90°)=1, sin(180°)=0</li>
+                        <li>cos(0°)=1, cos(90°)=0, cos(180°)=-1</li>
+                        <li>tan(45°)=1, ctg(45°)=1</li>
+                        <li>tan и ctg обратны друг другу</li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </footer>
+    </div>
 
     <script>
-        // Инициализация Telegram Web App
-        let tg = window.Telegram?.WebApp;
+        // Основные углы в градусах
+        const angles = [0, 30, 45, 60, 90, 120, 135, 150, 180];
         
-        // Функции для работы вкладок
-        function initTabs() {
-            const tabs = document.querySelectorAll('.tab');
-            const tabLinks = document.querySelectorAll('.tab-link');
-            
-            // Обработчики для основных вкладок
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const targetTab = tab.getAttribute('data-tab');
-                    switchTab(targetTab);
-                });
-            });
-            
-            // Обработчики для ссылок в футере
-            tabLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetTab = link.getAttribute('data-tab');
-                    switchTab(targetTab);
-                });
-            });
-        }
-
-        function switchTab(tabName) {
-            // Скрыть все вкладки
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            
-            // Убрать активный класс у всех табов
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Показать выбранную вкладку
-            const targetContent = document.getElementById(tabName);
-            if (targetContent) {
-                targetContent.classList.add('active');
+        // Тригонометрические значения (включая ctg)
+        const trigValues = {
+            0: { 
+                sin: 0, 
+                cos: 1, 
+                tan: 0,
+                ctg: 'не опр.'
+            },
+            30: { 
+                sin: '1/2', 
+                cos: '√3/2', 
+                tan: '√3/3',
+                ctg: '√3'
+            },
+            45: { 
+                sin: '√2/2', 
+                cos: '√2/2', 
+                tan: 1,
+                ctg: 1
+            },
+            60: { 
+                sin: '√3/2', 
+                cos: '1/2', 
+                tan: '√3',
+                ctg: '√3/3'
+            },
+            90: { 
+                sin: 1, 
+                cos: 0, 
+                tan: 'не опр.',
+                ctg: 0
+            },
+            120: { 
+                sin: '√3/2', 
+                cos: '-1/2', 
+                tan: '-√3',
+                ctg: '-√3/3'
+            },
+            135: { 
+                sin: '√2/2', 
+                cos: '-√2/2', 
+                tan: -1,
+                ctg: -1
+            },
+            150: { 
+                sin: '1/2', 
+                cos: '-√3/2', 
+                tan: '-√3/3',
+                ctg: '-√3'
+            },
+            180: { 
+                sin: 0, 
+                cos: -1, 
+                tan: 0,
+                ctg: 'не опр.'
             }
+        };
+        
+        // Элементы DOM
+        const tableBody = document.getElementById('tableBody');
+        const showAllBtn = document.getElementById('showAllBtn');
+        const practiceBtn = document.getElementById('practiceBtn');
+        const quizBtn = document.getElementById('quizBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const quizContainer = document.getElementById('quizContainer');
+        const quizQuestion = document.getElementById('quizQuestion');
+        const quizOptions = document.getElementById('quizOptions');
+        const quizResult = document.getElementById('quizResult');
+        
+        // Текущий режим
+        let currentMode = 'showAll';
+        let hiddenCells = [];
+        let quizQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        
+        // Инициализация таблицы
+        function initTable() {
+            tableBody.innerHTML = '';
             
-            // Активировать соответствующий таб
-            const targetTab = document.querySelector(`.tab[data-tab="${tabName}"]`);
-            if (targetTab) {
-                targetTab.classList.add('active');
-            }
-        }
-
-        // Функция для загрузки изображений
-        function loadImages() {
-            const imageContainers = document.querySelectorAll('.item-image');
-            
-            imageContainers.forEach(container => {
-                const imageUrl = container.getAttribute('data-image');
-                const imgElement = container.querySelector('img');
-                const placeholder = container.querySelector('.image-placeholder');
+            angles.forEach(angle => {
+                const rad = (angle * Math.PI / 180).toFixed(3);
+                const values = trigValues[angle];
                 
-                if (imageUrl && imgElement) {
-                    imgElement.src = imageUrl;
-                    imgElement.onload = function() {
-                        container.classList.add('loaded');
-                    };
-                    imgElement.onerror = function() {
-                        container.classList.remove('loaded');
-                        console.error('Ошибка загрузки изображения:', imageUrl);
-                    };
+                const row = document.createElement('tr');
+                
+                // Угол в градусах
+                const angleCell = document.createElement('td');
+                angleCell.textContent = ${angle}°;
+                angleCell.className = 'angle-cell';
+                row.appendChild(angleCell);
+                
+                // Угол в радианах
+                const radCell = document.createElement('td');
+                radCell.textContent = rad;
+                row.appendChild(radCell);
+                
+                // sin
+                const sinCell = document.createElement('td');
+                sinCell.innerHTML = <span>${values.sin}</span>;
+                sinCell.className = 'value-cell';
+                sinCell.dataset.angle = angle;
+                sinCell.dataset.func = 'sin';
+                sinCell.dataset.value = values.sin;
+                row.appendChild(sinCell);
+                
+                // cos
+                const cosCell = document.createElement('td');
+                cosCell.innerHTML = <span>${values.cos}</span>;
+                cosCell.className = 'value-cell';
+                cosCell.dataset.angle = angle;
+                cosCell.dataset.func = 'cos';
+                cosCell.dataset.value = values.cos;
+                row.appendChild(cosCell);
+                
+                // tan
+                const tanCell = document.createElement('td');
+                tanCell.innerHTML = <span>${values.tan}</span>;
+                           tanCell.className = 'value-cell';
+                tanCell.dataset.angle = angle;
+                tanCell.dataset.func = 'tan';
+                tanCell.dataset.value = values.tan;
+                row.appendChild(tanCell);
+                
+                // ctg
+                const ctgCell = document.createElement('td');
+                ctgCell.innerHTML = <span>${values.ctg}</span>;
+                ctgCell.className = 'value-cell';
+                ctgCell.dataset.angle = angle;
+                ctgCell.dataset.func = 'ctg';
+                ctgCell.dataset.value = values.ctg;
+                row.appendChild(ctgCell);
+                
+                tableBody.appendChild(row);
+            });
+            
+            updateTableForMode();
+        }
+        
+        // Обновление таблицы в зависимости от режима
+        function updateTableForMode() {
+            const valueCells = document.querySelectorAll('.value-cell');
+            
+            // Сброс всех стилей
+            valueCells.forEach(cell => {
+                cell.classList.remove('hidden', 'correct', 'incorrect');
+                cell.onclick = null;
+            });
+            
+            if (currentMode === 'practice') {
+                // Скрываем случайные 10 ячеек для запоминания
+                hiddenCells = [];
+                const allCells = Array.from(valueCells);
+                
+                // Исключаем ячейки с "не опр."
+                const availableCells = allCells.filter(cell => {
+                    return cell.dataset.value !== 'не опр.';
+                });
+                
+                // Выбираем случайные 10 ячеек
+                while (hiddenCells.length < 10 && hiddenCells.length < availableCells.length) {
+                    const randomIndex = Math.floor(Math.random() * availableCells.length);
+                    const cell = availableCells[randomIndex];
+                    
+                    if (!hiddenCells.includes(cell)) {
+                        hiddenCells.push(cell);
+                    }
+                }
+                
+                // Скрываем выбранные ячейки
+                hiddenCells.forEach(cell => {
+                    cell.classList.add('hidden');
+                    cell.onclick = () => revealCell(cell);
+                });
+            } else if (currentMode === 'showAll') {
+                // Показываем все значения
+                hiddenCells = [];
+            }
+        }
+        
+        // Показать скрытую ячейку
+        function revealCell(cell) {
+            cell.classList.remove('hidden');
+            const index = hiddenCells.indexOf(cell);
+            if (index > -1) {
+                hiddenCells.splice(index, 1);
+            }
+        }
+        
+        // Переключение режимов
+        showAllBtn.addEventListener('click', () => {
+            currentMode = 'showAll';
+            updateActiveButton(showAllBtn);
+            quizContainer.classList.remove('active');
+            document.getElementById('trigTable').classList.remove('practice-mode');
+            updateTableForMode();
+        });
+        
+        practiceBtn.addEventListener('click', () => {
+            currentMode = 'practice';
+            updateActiveButton(practiceBtn);
+            quizContainer.classList.remove('active');
+            document.getElementById('trigTable').classList.add('practice-mode');
+            updateTableForMode();
+        });
+        
+        quizBtn.addEventListener('click', () => {
+            currentMode = 'quiz';
+            updateActiveButton(quizBtn);
+            document.getElementById('trigTable').classList.remove('practice-mode');
+            startQuiz();
+        });
+        
+        resetBtn.addEventListener('click', () => {
+            initTable();
+            quizContainer.classList.remove('active');
+            document.getElementById('trigTable').classList.remove('practice-mode');
+            currentMode = 'showAll';
+            updateActiveButton(showAllBtn);
+        });
+        
+        // Обновление активной кнопки
+        function updateActiveButton(activeBtn) {
+            [showAllBtn, practiceBtn, quizBtn].forEach(btn => {
+                btn.classList.remove('active');
+            });
+            activeBtn.classList.add('active');
+        }
+        
+        // Викторина
+        function startQuiz() {
+            quizQuestions = generateQuizQuestions();
+            currentQuestionIndex = 0;
+            score = 0;
+            showNextQuestion();
+            quizContainer.classList.add('active');
+        }
+        
+        function generateQuizQuestions() {
+            const questions = [];
+            const questionTypes = ['sin', 'cos', 'tan', 'ctg'];
+            
+            // Выбираем 6 случайных углов
+            const quizAngles = [...angles]
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 6);
+            
+            quizAngles.forEach(angle => {
+                const type = questionTypes[Math.floor(Math.random() * questionTypes.length)];
+                
+                const correctAnswer = trigValues[angle][type];
+                
+                // Пропускаем вопросы с "не опр."
+                if (correctAnswer === 'не опр.') return;
+                
+                // Создаем неправильные варианты ответов
+                const incorrectAnswers = generateIncorrectAnswers(angle, type, correctAnswer);
+                
+                // Смешиваем правильные и неправильные ответы
+                const allAnswers = [correctAnswer, ...incorrectAnswers]
+                    .sort(() => Math.random() - 0.5);
+                
+                questions.push({
+                    angle,
+                    type,
+                    correctAnswer,
+                    answers: allAnswers
+                });
+            });
+            
+            return questions;
+        }
+        
+        function generateIncorrectAnswers(angle, type, correctAnswer) {
+            const incorrect = [];
+            const allValues = new Set();
+            
+            // Собираем все возможные значения из таблицы
+            angles.forEach(a => {
+                if (a !== angle) {
+                    const value = trigValues[a][type];
+                    if (value !== correctAnswer && value !== 'не опр.') {
+                        allValues.add(value);
+                    }
+                }
+                
+                // Добавляем обратные значения для tan/ctg
+                if ((type === 'tan' && trigValues[a]['ctg'] !== 'не опр.') || 
+                    (type === 'ctg' && trigValues[a]['tan'] !== 'не опр.')) {
+                    const inverseValue = type === 'tan' ? trigValues[a]['ctg'] : trigValues[a]['tan'];
+                    if (inverseValue !== correctAnswer && inverseValue !== 'не опр.') {
+                        allValues.add(inverseValue);
+                    }
                 }
             });
+            
+            // Преобразуем в массив и выбираем 3 случайных
+            const valuesArray = Array.from(allValues)
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 3);
+            
+            return valuesArray;
         }
-
-        // Функции для работы с Telegram
-        function initTelegram() {
-            if (!tg) {
-                console.log('Telegram Web App не доступен');
-                document.getElementById('userName').textContent = 'Гость';
+        
+        function showNextQuestion() {
+            if (currentQuestionIndex >= quizQuestions.length) {
+                showQuizResults();
                 return;
             }
             
-            // Расширяем на весь экран
-            tg.expand();
+            const question = quizQuestions[currentQuestionIndex];
             
-            // Устанавливаем цвет фона
-            tg.setBackgroundColor('#0f1419');
+            // Отображаем функцию с правильным названием
+            const funcNames = {
+                'sin': 'синус',
+                'cos': 'косинус', 
+                'tan': 'тангенс',
+                'ctg': 'котангенс'
+            };
             
-            // Получаем данные пользователя
-            const user = tg.initDataUnsafe?.user;
+            quizQuestion.textContent = Чему равен ${funcNames[question.type]}(${question.angle}°)?;
+            quizOptions.innerHTML = '';
+            quizResult.className = 'quiz-result';
             
-            if (user) {
-                // Отображаем информацию о пользователе
-                document.getElementById('userName').textContent = user.first_name || 'Пользователь';
-                document.getElementById('userAvatar').textContent = user.first_name ? user.first_name.charAt(0).toUpperCase() : 'U';
-            } else {
-                document.getElementById('userName').textContent = 'Гость';
-            }
-            
-            // Обработчик кнопки "Назад" в Telegram
-            if (tg.BackButton) {
-                tg.BackButton.onClick(goBack);
-            }
-        }
-
-        function goBack() {
-            if (tg && tg.close) {
-                tg.close();
-            } else {
-                window.history.back();
-            }
-        }
-
-        // Функция для открытия донат страницы
-        function openDonatePage(itemName, price) {
-            const donateUrl = 'https://t.me/izi138';
-            
-            // Пытаемся открыть через Telegram Web App
-            if (tg && tg.openLink) {
-                tg.openLink(donateUrl);
-            } else {
-                // Если Telegram Web App не доступен, открываем в новом окне
-                window.open(donateUrl, '_blank', 'noopener,noreferrer');
-            }
-            
-            // Показываем уведомление
-            if (tg && tg.showAlert) {
-                tg.showAlert(`Вы будете перенаправлены на страницу оплаты для покупки "${itemName}" за ${price} ₽`);
-            } else {
-                alert(`Вы будете перенаправлены на страницу оплаты для покупки "${itemName}" за ${price} ₽`);
-            }
-        }
-
-        // Обработчик для кнопок "Купить"
-        function initBuyButtons() {
-            const buyButtons = document.querySelectorAll('.btn-donate');
-            
-            buyButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const itemName = this.getAttribute('data-item');
-                    const price = this.getAttribute('data-price');
-                    
-                    if (tg && tg.showConfirm) {
-                        // Используем Telegram confirm диалог
-                        tg.showConfirm(
-                            `Вы хотите купить "${itemName}" за ${price} ₽?`,
-                            function(confirmed) {
-                                if (confirmed) {
-                                    openDonatePage(itemName, price);
-                                }
-                            }
-                        );
-                    } else {
-                        // Используем стандартный confirm
-                        if (confirm(`Вы хотите купить "${itemName}" за ${price} ₽?`)) {
-                            openDonatePage(itemName, price);
-                        }
-                    }
-                });
+            question.answers.forEach((answer, index) => {
+                const option = document.createElement('div');
+                option.className = 'quiz-option';
+                option.textContent = answer;
+                option.dataset.index = index;
+                option.
+                    onclick = () => checkAnswer(answer, question.correctAnswer, option);
+                quizOptions.appendChild(option);
             });
         }
-
-        // Вспомогательные функции
-        function showSupport() {
-            if (tg && tg.openTelegramLink) {
-                tg.openTelegramLink('https://t.me/your_support_bot');
-            } else {
-                alert('Техническая поддержка: @your_support_bot');
-            }
-        }
-
-        function showContacts() {
-            if (tg && tg.showAlert) {
-                tg.showAlert('Техническая поддержка: @your_support_bot\nEmail: support@example.com');
-            } else {
-                alert('Техническая поддержка: @your_support_bot\nEmail: support@example.com');
-            }
-        }
-
-        function showTerms() {
-            if (tg && tg.showAlert) {
-                tg.showAlert('Здесь будут условия использования сервиса...');
-            } else {
-                alert('Здесь будут условия использования сервиса...');
-            }
-        }
-
-        // Инициализация при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            initTabs();
-            initTelegram();
-            initBuyButtons();
-            loadImages();
+        
+        function checkAnswer(selected, correct, optionElement) {
+            const allOptions = document.querySelectorAll('.quiz-option');
             
-            console.log('Сайт загружен и готов к работе');
-        });
+            // Отключаем все варианты
+            allOptions.forEach(opt => {
+                opt.onclick = null;
+            });
+            
+            // Показываем правильные/неправильные ответы
+            allOptions.forEach(opt => {
+                if (opt.textContent === correct) {
+                    opt.classList.add('correct');
+                }
+                
+                if (opt === optionElement && selected !== correct) {
+                    opt.classList.add('incorrect');
+                }
+            });
+            
+            // Показываем результат
+            if (selected === correct) {
+                quizResult.textContent = 'Правильно! ✓';
+                quizResult.className = 'quiz-result correct';
+                score++;
+            } else {
+                quizResult.textContent = Неправильно. Правильный ответ: ${correct};
+                quizResult.className = 'quiz-result incorrect';
+            }
+            
+            // Переход к следующему вопросу через 2 секунды
+            setTimeout(() => {
+                currentQuestionIndex++;
+                showNextQuestion();
+            }, 2000);
+        }
+        
+        function showQuizResults() {
+            quizQuestion.textContent = 'Викторина завершена!';
+            quizOptions.innerHTML = '';
+            
+            const percentage = Math.round((score / quizQuestions.length) * 100);
+            let message = Ваш результат: ${score} из ${quizQuestions.length} (${percentage}%);
+            
+            if (percentage === 100) message += ' 🎉 Отлично!';
+            else if (percentage >= 80) message += ' 👍 Хорошо!';
+            else if (percentage >= 60) message += ' 🙂 Неплохо!';
+            else message += ' 📚 Есть над чем поработать';
+            
+            quizResult.textContent = message;
+            quizResult.className = 'quiz-result ' + (percentage >= 70 ? 'correct' : 'incorrect');
+            
+            // Кнопка для повторения викторины
+            const restartBtn = document.createElement('button');
+            restartBtn.textContent = 'Пройти ещё раз';
+            restartBtn.style.marginTop = '20px';
+            restartBtn.onclick = startQuiz;
+            quizOptions.appendChild(restartBtn);
+        }
+        
+        // Инициализация приложения
+        initTable();
+        updateActiveButton(showAllBtn);
     </script>
 </body>
 </html>
-
-
