@@ -1,4 +1,162 @@
-cursor: pointer;
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подготовка к ЕГЭ по информатике</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f9ff;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a5fb4, #2d87d0);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 25px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .tasks-sidebar {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            height: fit-content;
+        }
+        
+        .tasks-sidebar h2 {
+            color: #1a5fb4;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        .tasks-list {
+            list-style: none;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .task-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid #1a5fb4;
+        }
+        
+        .task-item:hover {
+            background-color: #e1eeff;
+            transform: translateX(5px);
+        }
+        
+        .task-item.active {
+            background-color: #d4e6ff;
+            border-left: 4px solid #ff6b00;
+            font-weight: 600;
+        }
+        
+        .task-number {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background-color: #1a5fb4;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .task-item.active .task-number {
+            background-color: #ff6b00;
+        }
+        
+        .task-content {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        .task-title {
+            color: #1a5fb4;
+            font-size: 1.8rem;
+        }
+        
+        .task-difficulty {
+            background-color: #e1eeff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .task-tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .tab-btn {
+            padding: 12px 25px;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
             color: #666;
             transition: all 0.3s ease;
             border-bottom: 3px solid transparent;
@@ -470,7 +628,7 @@ print(f"Наименьшая сумма элементов таких пар: {m
             // Заполняем вкладки
             document.getElementById('theoryText').textContent = task.theory;
             document.getElementById('codeText').textContent = task.code;
-            document.getElementById('codeExample').innerHTML = <code>${task.codeExample}</code>;
+            document.getElementById('codeExample').innerHTML = `<code>${task.codeExample}</code>`;
             document.getElementById('manualText').textContent = task.manual;
             document.getElementById('solutionText').textContent = task.solution;
             
@@ -488,162 +646,3 @@ print(f"Наименьшая сумма элементов таких пар: {m
     </script>
 </body>
 </html>
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Подготовка к ЕГЭ по информатике</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f9ff;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            background: linear-gradient(135deg, #1a5fb4, #2d87d0);
-            color: white;
-            padding: 30px 0;
-            text-align: center;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-        
-        .main-content {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 25px;
-        }
-        
-        @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .tasks-sidebar {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            height: fit-content;
-        }
-        
-        .tasks-sidebar h2 {
-            color: #1a5fb4;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #eaeaea;
-        }
-        
-        .tasks-list {
-            list-style: none;
-            max-height: 500px;
-            overflow-y: auto;
-        }
-        
-        .task-item {
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            background-color: #f0f7ff;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-left: 4px solid #1a5fb4;
-        }
-        
-        .task-item:hover {
-            background-color: #e1eeff;
-            transform: translateX(5px);
-        }
-        
-        .task-item.active {
-            background-color: #d4e6ff;
-            border-left: 4px solid #ff6b00;
-            font-weight: 600;
-        }
-        
-        .task-number {
-            display: inline-block;
-            width: 28px;
-            height: 28px;
-            background-color: #1a5fb4;
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 28px;
-            margin-right: 10px;
-            font-weight: bold;
-        }
-        
-        .task-item.active .task-number {
-            background-color: #ff6b00;
-        }
-        
-        .task-content {
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-        }
-        
-        .task-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #eaeaea;
-        }
-        
-        .task-title {
-            color: #1a5fb4;
-            font-size: 1.8rem;
-        }
-        
-        .task-difficulty {
-            background-color: #e1eeff;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-        
-        .task-tabs {
-            display: flex;
-            margin-bottom: 25px;
-            border-bottom: 1px solid #eaeaea;
-        }
-        
-        .tab-btn {
-            padding: 12px 25px;
-            background: none;
-            border: none;
-            font-size: 1rem;
-            font-weight: 600;
-            
