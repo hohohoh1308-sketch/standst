@@ -1,822 +1,649 @@
+cursor: pointer;
+            color: #666;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-btn.active {
+            color: #1a5fb4;
+            border-bottom: 3px solid #1a5fb4;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .theory-content, .code-content, .manual-content, .solution-content {
+            padding: 10px 0;
+        }
+        
+        h3 {
+            color: #1a5fb4;
+            margin: 20px 0 10px;
+        }
+        
+        pre {
+            background-color: #2b2b2b;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+        
+        code {
+            font-family: 'Courier New', monospace;
+            background-color: #f0f7ff;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #1a5fb4;
+        }
+        
+        .task-description {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #1a5fb4;
+        }
+        
+        .source-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: #1a5fb4;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .source-btn:hover {
+            background-color: #0f4a9e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .source-btn i {
+            margin-right: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #eaeaea;
+        }
+        
+        .task-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .tag {
+            background-color: #e1eeff;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            color: #1a5fb4;
+        }
+        
+        .no-task-selected {
+            text-align: center;
+            padding: 40px 20px;
+            color: #888;
+        }
+        
+        .no-task-selected h3 {
+            color: #888;
+            margin-bottom: 10px;
+        }
+        
+        .task-stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>ЕГЭ по информатике</h1>
+            <p class="subtitle">Интерактивная платформа для подготовки к экзамену</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="main-content">
+            <aside class="tasks-sidebar">
+                <h2>Задания ЕГЭ</h2>
+                <ul class="tasks-list" id="tasksList">
+                    <!-- Список заданий будет сгенерирован JavaScript -->
+                </ul>
+            </aside>
+            
+            <main class="task-content">
+                <div id="taskDisplay">
+                    <div class="no-task-selected" id="noTaskSelected">
+                        <i class="fas fa-tasks fa-3x" style="color: #ccc; margin-bottom: 15px;"></i>
+                        <h3>Выберите задание из списка</h3>
+                        <p>Для просмотра теории, решений и исходного задания выберите задание из списка слева</p>
+                    </div>
+                    
+                    <div id="taskContent" style="display: none;">
+                        <div class="task-header">
+                            <div>
+                                <h2 class="task-title" id="taskTitle">Задание 1</h2>
+                                <div class="task-stats">
+                                    <span><i class="far fa-clock"></i> Рекомендуемое время: <span id="taskTime">5 мин</span></span>
+                                    <span><i class="fas fa-chart-line"></i> Сложность: <span id="taskDifficulty">Базовая</span></span>
+                                </div>
+                            </div>
+                            <span class="task-difficulty" id="taskDifficultyBadge">Базовая</span>
+                        </div>
+                        
+                        <div class="task-description">
+                            <p id="taskDescription">Описание задания появится здесь после выбора</p>
+                            <div class="task-tags" id="taskTags"></div>
+                        </div>
+                        
+                        <div class="task-tabs">
+                            <button class="tab-btn active" data-tab="theory">Теория</button>
+                            <button class="tab-btn" data-tab="code">Решение кодом</button>
+                            <button class="tab-btn" data-tab="manual">Решение вручную</button>
+                            <button class="tab-btn" data-tab="solution">Ответ</button>
+                        </div>
+                        
+                        <div class="tab-content active" id="theory">
+                            <div class="theory-content">
+                                <h3>Теоретические сведения</h3>
+                                <p id="theoryText">Теория для выбранного задания будет отображена здесь.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="code">
+                            <div class="code-content">
+                                <h3>Решение с помощью программирования</h3>
+                                <p id="codeText">Пример решения на Python будет показан здесь.</p>
+                                <pre id="codeExample"><code># Код появится здесь после выбора задания</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="manual">
+                            <div class="manual-content">
+                                <h3>Решение вручную (без программирования)</h3>
+                                <p id="manualText">Пошаговое решение задания без использования программирования.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="solution">
+                            <div class="solution-content">
+                                <h3>Ответ на задание</h3>
+                                <p id="solutionText">Ответ будет показан здесь после выбора задания.</p>
+                                <a href="#" target="_blank" class="source-btn" id="sourceLink">
+                                    <i class="fas fa-external-link-alt"></i> Источник задания
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2023 Подготовка к ЕГЭ по информатике. Образовательный проект для учеников.</p>
+            <p>Все задания взяты из открытых источников и используются в учебных целях.</p>
+        </div>
+    </footer>
+
+    <script>
+        // База данных заданий
+        const tasks = [
+            {
+                id: 1,
+                title: "Задание 1: Кодирование информации",
+                description: "Считая, что каждый символ кодируется 16 битами, оцените информационный объем в битах следующего предложения в кодировке Unicode: Привет, мир!",
+                difficulty: "Базовая",
+                time: "5 мин",
+                tags: ["кодирование", "Unicode", "биты"],
+                theory: "В кодировке Unicode каждый символ занимает 16 бит (2 байта). Для расчета информационного объема текста нужно подсчитать количество символов в тексте (включая пробелы и знаки препинания) и умножить на 16 бит.",
+                code: "Для решения этой задачи на Python можно просто посчитать длину строки и умножить на 16.",
+                codeExample: `text = "Привет, мир!"
+# Подсчитываем количество символов в строке
+char_count = len(text)
+# Каждый символ в Unicode занимает 16 бит
+bits = char_count * 16
+print(f"Количество символов: {char_count}")
+print(f"Информационный объем: {bits} бит")`,
+                manual: "1. Посчитайте количество символов в предложении 'Привет, мир!' (включая пробел и знаки препинания). Всего 12 символов.\n2. Умножьте количество символов на 16 бит: 12 × 16 = 192 бита.\n3. Ответ: 192 бита.",
+                solution: "Ответ: 192 бита.",
+                source: "https://inf-ege.sdamgia.ru/problem?id=13370"
+            },
+            {
+                id: 2,
+                title: "Задание 2: Построение таблиц истинности",
+                description: "Логическая функция F задаётся выражением (x ∧ ¬y) ∨ (y ≡ z) ∨ w. Дан частично заполненный фрагмент таблицы истинности функции F. Определите, какому столбцу таблицы истинности соответствует каждая из переменных x, y, z, w.",
+                difficulty: "Средняя",
+                time: "10 мин",
+                tags: ["логика", "таблицы истинности", "булева алгебра"],
+                theory: "Для решения задания на построение таблиц истинности необходимо последовательно подставлять значения переменных и вычислять результат логического выражения. Используются логические операции: И (∧), ИЛИ (∨), НЕ (¬), эквивалентность (≡).",
+                code: "Можно перебрать все возможные комбинации значений переменных с помощью Python.",
+                codeExample: `def evaluate(x, y, z, w):
+    return (x and not y) or (y == z) or w
+
+# Перебираем все возможные комбинации
+for x in [0, 1]:
+    for y in [0, 1]:
+        for z in [0, 1]:
+            for w in [0, 1]:
+                result = evaluate(x, y, z, w)
+                print(f"x={x}, y={y}, z={z}, w={w} -> F={result}")`,
+                manual: "1. Построим таблицу истинности для всех переменных x, y, z, w (16 строк).\n2. Вычислим значение выражения для каждой строки.\n3. Сравним с данными в условии и определим соответствие столбцов.",
+                solution: "Ответ: x - первый столбец, y - второй, z - третий, w - четвертый (конкретное решение зависит от фрагмента таблицы в условии).",
+                source: "https://inf-ege.sdamgia.ru/problem?id=15991"
+            },
+            {
+                id: 3,
+                title: "Задание 8: Комбинаторика",
+                description: "Все 5-буквенные слова, составленные из букв А, О, У, записаны в алфавитном порядке. На каком месте от начала списка стоит слово УАУАУ?",
+                difficulty: "Средняя",
+                time: "12 мин",
+                tags: ["комбинаторика", "слова", "позиционирование"],
+                theory: "Для решения задач на определение позиции слова в лексикографическом порядке необходимо:\n1. Рассматривать алфавитный порядок букв (А < О < У).\n2. Подсчитывать количество слов, которые идут раньше искомого слова.\n3. Использовать формулу для перевода из системы счисления с основанием, равным количеству букв.",
+                code: "Можно сгенерировать все слова и найти позицию нужного.",
+                codeExample: `import itertools
+
+alphabet = ['А', 'О', 'У']
+all_words = [''.join(p) for p in itertools.product(alphabet, repeat=5)]
+all_words.sort()
+
+word = 'УАУАУ'
+position = all_words.index(word) + 1  # +1 т.к. нумерация с 1
+print(f"Слово '{word}' находится на позиции {position}")`,
+                manual: "1. Закодируем буквы: А=0, О=1, У=2.\n2. Слово УАУАУ в этой кодировке: 2 0 2 0 2.\n3. Это число в троичной системе: 20202₃.\n4. Переведем в десятичную: 2×3⁴ + 0×3³ + 2×3² + 0×3¹ + 2×3⁰ = 162 + 0 + 18 + 0 + 2 = 182.\n5. Но так как нумерация начинается с 1, а первое слово ААААА имеет номер 1 (00000₃ = 0), то слово УАУАУ имеет номер 182 + 1 = 183.",
+                solution: "Ответ: 183.",
+                source: "https://inf-ege.sdamgia.ru/problem?id=18563"
+            },
+            {
+                id: 4,
+                title: "Задание 14: Системы счисления",
+                description: "Значение арифметического выражения: 9^8 + 3^5 - 9 — записали в системе счисления с основанием 3. Сколько цифр «2» содержится в этой записи?",
+                difficulty: "Высокая",
+                time: "15 мин",
+                tags: ["системы счисления", "степени", "арифметика"],
+                theory: "Для решения задач на системы счисления с выражениями, содержащими степени, удобно:\n1. Представить все числа как степени тройки.\n2. Выполнить арифметические операции в троичной системе.\n3. Подсчитать нужные цифры в полученной записи.",
+                code: "Можно вычислить выражение и преобразовать результат в троичную систему.",
+                codeExample: `# Вычисляем выражение
+result = 9**8 + 3**5 - 9
+print(f"Результат в десятичной системе: {result}")
+
+# Преобразуем в троичную систему
+def to_base(n, base):
+    digits = []
+    while n > 0:
+        digits.append(str(n % base))
+        n //= base
+    return ''.join(reversed(digits))
+
+ternary = to_base(result, 3)
+print(f"Результат в троичной системе: {ternary}")
+print(f"Количество цифр '2': {ternary.count('2')}")`,
+                manual: "1. Представим все числа как степени тройки: 9 = 3², поэтому 9^8 = (3²)^8 = 3¹⁶.\n2. Выражение: 3¹⁶ + 3⁵ - 3².\n3. В троичной системе 3¹⁶ = 1 followed by 16 нулей (100...0₃, всего 17 цифр).\n4. При сложении 3¹⁶ + 3⁵ получаем число с 1 на 17-й позиции и 1 на 6-й позиции.\n5. Вычитая 3², получаем замену некоторых цифр. Подсчет дает 20 цифр '2'.",
+                solution: "Ответ: 20.",
+                source: "https://inf-ege.sdamgia.ru/problem?id=9768"
+            },
+            {
+                id: 5,
+                title: "Задание 16: Рекурсивные алгоритмы",
+                description: "Алгоритм вычисления значения функции F(n), где n — натуральное число, задан следующими соотношениями: F(n) = 1 при n = 1; F(n) = F(n-1) * n, если n > 1. Чему равно значение функции F(5)?",
+                difficulty: "Базовая",
+                time: "7 мин",
+                tags: ["рекурсия", "функции", "факториал"],
+                theory: "Рекурсивная функция вызывает сама себя с измененными параметрами. В данном случае функция вычисляет факториал числа n. Факториал n (обозначается n!) — произведение всех натуральных чисел от 1 до n.",
+                code: "Можно реализовать рекурсивную функцию на Python.",
+                codeExample: `def F(n):
+    if n == 1:
+        return 1
+    else:
+        return F(n-1) * n
+
+print(f"F(5) = {F(5)}")
+# Или проще с использованием цикла:
+result = 1
+for i in range(1, 6):
+    result *= i
+print(f"5! = {result}")`,
+                manual: "1. F(1) = 1 (по условию).\n2. F(2) = F(1) * 2 = 1 * 2 = 2.\n3. F(3) = F(2) * 3 = 2 * 3 = 6.\n4. F(4) = F(3) * 4 = 6 * 4 = 24.\n5. F(5) = F(4) * 5 = 24 * 5 = 120.",
+                solution: "Ответ: 120.",
+                source: "https://inf-ege.sdamgia.ru/problem?id=47228"
+            },
+            {
+                id: 6,
+                title: "Задание 27: Программирование",
+                description: "Имеется набор данных, состоящий из пар положительных целых чисел. Для каждой пары чисел находится их наибольший общий делитель (НОД). Необходимо найти количество пар, для которых НОД равен заданному числу D, а также наименьшую сумму элементов таких пар.",
+                difficulty: "Высокая",
+                time: "25 мин",
+                tags: ["программирование", "НОД", "оптимизация"],
+                theory: "Для решения задачи необходимо:\n1. Уметь вычислять НОД двух чисел (алгоритм Евклида).\n2. Эффективно обрабатывать большой набор данных.\n3. Искать минимальную сумму среди подходящих пар.",
+                code: "Пример решения на Python с использованием алгоритма Евклида.",
+                codeExample: `import math
+
+def count_pairs_with_gcd(data, D):
+    count = 0
+    min_sum = float('inf')
+    
+    for a, b in data:
+        if math.gcd(a, b) == D:
+            count += 1
+            if a + b < min_sum:
+                min_sum = a + b
+    
+    return count, min_sum
+
+# Пример данных
+data = [(15, 20), (24, 36), (14, 21), (30, 45), (7, 13)]
+D = 5
+count, min_sum = count_pairs_with_gcd(data, D)
+print(f"Количество пар с НОД={D}: {count}")
+print(f"Наименьшая сумма элементов таких пар: {min_sum}")`,
+                manual: "1. Для каждой пары чисел (a, b) вычисляем НОД с помощью алгоритма Евклида.\n2. Если НОД равен D, увеличиваем счетчик и проверяем сумму a+b на минимальность.\n3. Для эффективной работы с большими данными можно предварительно отсортировать пары или использовать другие оптимизации.\n4. Ответ: количество пар и минимальная сумма.",
+                solution: "Ответ зависит от конкретного набора данных. В примере выше: количество пар с НОД=5 равно 1, минимальная сумма = 35 (15+20).",
+                source: "https://inf-ege.sdamgia.ru/problem?id=39259"
+            }
+        ];
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Заполняем список заданий
+            const tasksList = document.getElementById('tasksList');
+            
+            tasks.forEach(task => {
+                const taskItem = document.createElement('li');
+                taskItem.className = 'task-item';
+                taskItem.dataset.id = task.id;
+                
+                taskItem.innerHTML = `
+                    <span class="task-number">${task.id}</span>
+                    ${task.title}
+                `;
+                
+                tasksList.appendChild(taskItem);
+                
+                // Обработчик клика на задание
+                taskItem.addEventListener('click', function() {
+                    // Убираем активный класс у всех заданий
+                    document.querySelectorAll('.task-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Добавляем активный класс к выбранному заданию
+                    this.classList.add('active');
+                    
+                    // Отображаем выбранное задание
+                    displayTask(task.id);
+                });
+            });
+            
+            // Обработчики для вкладок
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    
+                    // Убираем активный класс у всех кнопок вкладок
+                    document.querySelectorAll('.tab-btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    
+                    // Добавляем активный класс к текущей кнопке
+                    this.classList.add('active');
+                    
+                    // Скрываем все содержимое вкладок
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Показываем выбранную вкладку
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // По умолчанию выбираем первое задание
+            if (tasks.length > 0) {
+                document.querySelector('.task-item').click();
+            }
+        });
+        
+        // Функция отображения выбранного задания
+        function displayTask(taskId) {
+            // Находим задание по ID
+            const task = tasks.find(t => t.id == taskId);
+            
+            if (!task) return;
+            
+            // Скрываем сообщение "выберите задание"
+            document.getElementById('noTaskSelected').style.display = 'none';
+            
+            // Показываем контент задания
+            document.getElementById('taskContent').style.display = 'block';
+            
+            // Заполняем данные задания
+            document.getElementById('taskTitle').textContent = task.title;
+            document.getElementById('taskDescription').textContent = task.description;
+            document.getElementById('taskTime').textContent = task.time;
+            document.getElementById('taskDifficulty').textContent = task.difficulty;
+            document.getElementById('taskDifficultyBadge').textContent = task.difficulty;
+            
+            // Заполняем теги
+            const taskTags = document.getElementById('taskTags');
+            taskTags.innerHTML = '';
+            task.tags.forEach(tag => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'tag';
+                tagElement.textContent = tag;
+                taskTags.appendChild(tagElement);
+            });
+            
+            // Заполняем вкладки
+            document.getElementById('theoryText').textContent = task.theory;
+            document.getElementById('codeText').textContent = task.code;
+            document.getElementById('codeExample').innerHTML = <code>${task.codeExample}</code>;
+            document.getElementById('manualText').textContent = task.manual;
+            document.getElementById('solutionText').textContent = task.solution;
+            
+            // Обновляем ссылку на источник
+            const sourceLink = document.getElementById('sourceLink');
+            sourceLink.href = task.source;
+            
+            // Активируем первую вкладку
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.tab-btn[data-tab="theory"]').classList.add('active');
+            
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById('theory').classList.add('active');
+        }
+    </script>
+</body>
+</html>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тригонометрическая таблица 0°-180°</title>
+    <title>Подготовка к ЕГЭ по информатике</title>
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            max-width: 1400px;
+            background-color: #f5f9ff;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #333;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a5fb4, #2d87d0);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
         }
         
         h1 {
-            text-align: center;
-            color: #2c3e50;
+            font-size: 2.5rem;
             margin-bottom: 10px;
         }
         
         .subtitle {
-            text-align: center;
-            color: #7f8c8d;
-            margin-bottom: 30px;
+            font-size: 1.1rem;
+            opacity: 0.9;
         }
         
-        .app-container {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-        
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-        
-        button {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            background-color: #3498db;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 16px;
-        }
-        
-        button:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        button.active {
-            background-color: #2ecc71;
-        }
-        
-        .table-container {
-            overflow-x: auto;
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 1000px;
-        }
-        
-        th {
-            background-color: #2c3e50;
-            color: white;
-            padding: 18px 8px;
-            text-align: center;
-            font-size: 17px;
-            position: sticky;
-            top: 0;
-        }
-        
-        td {
-            padding: 15px 8px;
-            text-align: center;
-            border-bottom: 1px solid #eee;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-        
-        tr:hover {
-            background-color: #f8f9fa;
-        }
-        
-        .angle-cell {
-            background-color: #f1f8ff;
-            font-weight: bold;
-            color: #2c3e50;
-        }
-        
-        .practice-mode .value-cell {
-            background-color: #fffde7;
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .practice-mode .value-cell.hidden span {
-            visibility: hidden;
-        }
-        
-        .practice-mode .value-cell.hidden::after {
-            content: "?";
-            position: absolute;
-            left: 0;
-            right: 0;
-            color: #e74c3c;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        
-        .value-cell.correct {
-            background-color: #d4edda !important;
-            color: #155724;
-        }
-        
-        .value-cell.incorrect {
-            background-color: #f8d7da !important;
-            color: #721c24;
-        }
-        
-        .function-explanation {
+        .main-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .func-card {
-            text-align: center;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: #f8f9fa;
-        }
-        
-        .func-card h4 {
-            margin: 0 0 10px 0;
-            color: #2c3e50;
-        }
-        
-        .func-card p {
-            margin: 0;
-            font-size: 14px;
-            color: #7f8c8d;
-        }
-        
-        .func-sin { border-left: 4px solid #3498db; }
-        .func-cos { border-left: 4px solid #2ecc71; }
-        .func-tan { border-left: 4px solid #e74c3c; }
-        .func-ctg { border-left: 4px solid #9b59b6; }
-        
-        .explanation {
-            background-color: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-top: 20px;
-        }
-        
-        .explanation h3 {
-            color: #2c3e50;
-            margin-top: 0;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
-        }
-        
-        .memory-rules {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .rule {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 5px solid #3498db;
-        }
-        
-        .rule h4 {
-            margin-top: 0;
-            color: #2c3e50;
-        }
-        
-        .quiz-container {
-            background-color: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            display: none;
-        }
-        
-        .quiz-container.active {
-            display: block;
-        }
-        
-        .quiz-question {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #2c3e50;
-        }
-        
-        .quiz-options {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .quiz-option {
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-            font-size: 18px;
-        }
-        
-        .quiz-option:hover {
-            background-color: #e9ecef;
-            transform: translateY(-3px);
-        }
-        
-        .quiz-option.correct {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        
-        .quiz-option.incorrect {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-        
-        .quiz-result {
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            display: none;
-        }
-        
-        .quiz-result.correct {
-            background-color: #d4edda;
-            color: #155724;
-            display: block;
-        }
-        
-        .quiz-result.incorrect {
-            background-color: #f8d7da;
-            color: #721c24;
-            display: block;
-        }
-        
-        .relationship {
-            background-color: #fffde7;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            border-left: 4px solid #f39c12;
-        }
-        
-        .relationship h4 {
-            margin-top: 0;
-            color: #d35400;
+            grid-template-columns: 300px 1fr;
+            gap: 25px;
         }
         
         @media (max-width: 768px) {
-            .controls {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            button {
-                width: 100%;
-                max-width: 300px;
-            }
-            
-            .quiz-options {
-                grid-template-columns: 1fr;
-            }
-            
-            .memory-rules {
-                grid-template-columns: 1fr;
-            }
-            
-            .function-explanation {
+            .main-content {
                 grid-template-columns: 1fr;
             }
         }
-    </style>
-</head>
-<body>
-    <h1>Тригонометрическая таблица 0°-180°</h1>
-    <p class="subtitle">Изучите значения синуса, косинуса, тангенса и котангенса для основных углов</p>
-    
-    <div class="app-container">
-        <div class="function-explanation">
-            <div class="func-card func-sin">
-                <h4>sin(θ) = противолежащий/гипотенуза</h4>
-                <p>Синус угла - отношение противолежащего катета к гипотенузе</p>
-            </div>
-            <div class="func-card func-cos">
-                <h4>cos(θ) = прилежащий/гипотенуза</h4>
-                <p>Косинус угла - отношение прилежащего катета к гипотенузе</p>
-            </div>
-            <div class="func-card func-tan">
-                <h4>tan(θ) = sin/cos</h4>
-                <p>Тангенс угла - отношение синуса к косинусу</p>
-            </div>
-            <div class="func-card func-ctg">
-                <h4>ctg(θ) = cos/sin = 1/tan</h4>
-                <p>Котангенс - отношение косинуса к синусу, обратный тангенсу</p>
-            </div>
-        </div>
         
-        <div class="controls">
-            <button id="showAllBtn" class="active">Показать всю таблицу</button>
-            <button id="practiceBtn">Режим заучивания</button>
-            <button id="quizBtn">Проверка знаний</button>
-            <button id="resetBtn">Сбросить</button>
-        </div>
-        
-        <div class="table-container">
-            <table id="trigTable">
-                <thead>
-                    <tr>
-                        <th>Угол (°)</th>
-                        <th>Угол (рад)</th>
-                        <th>sin(θ)</th>
-                        <th>cos(θ)</th>
-                        <th>tan(θ)</th>
-                        <th>ctg(θ)</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <!-- Таблица будет заполнена JavaScript -->
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="quiz-container" id="quizContainer">
-            <div class="quiz-question" id="quizQuestion"></div>
-            <div class="quiz-options" id="quizOptions"></div>
-            <div class="quiz-result" id="quizResult"></div>
-        </div>
-        
-        <div class="explanation">
-            <h3>Помощь в запоминании</h3>
-            
-            <div class="relationship">
-                <h4>Важные соотношения</h4>
-                <p>ctg(θ) = 1/tan(θ) • ctg(θ) = cos(θ)/sin(θ) • tan(θ) × ctg(θ) = 1</p>
-                <p>Если sin(θ) = 0 → ctg(θ) не существует • Если cos(θ) = 0 → tan(θ) не существует</p>
-            </div>
-            
-            <div class="memory-rules">
-                <div class="rule">
-                    <h4>Основные углы (0°, 30°, 45°, 60°, 90°)</h4>
-                    <ul>
-                        <li><strong>sin:</strong> 0, 1/2, √2/2, √3/2, 1</li>
-                        <li><strong>cos:</strong> 1, √3/2, √2/2, 1/2, 0</li>
-                        <li><strong>tan:</strong> 0, 1/√3, 1, √3, не опр.</li>
-                        <li><strong>ctg:</strong> не опр., √3, 1, 1/√3, 0</li>
-                    </ul>
-                </div>
-                
-                <div class="rule">
-                    <h4>Формулы приведения (120°, 135°, 150°, 180°)</h4>
-                    <p>Для углов во II четверти (90°-180°):</p>
-                    <ul>
-                        <li>sin(180°-θ) = sin(θ)</li>
-                        <li>cos(180°-θ) = -cos(θ)</li>
-                        <li>tan(180°-θ) = -tan(θ)</li>
-                        <li>ctg(180°-θ) = -ctg(θ)</li>
-                    </ul>
-                </div>
-                
-                <div class="rule">
-                    <h4>Особые значения и закономерности</h4>
-                    <ul>
-                        <li>sin(0°)=0, sin(90°)=1, sin(180°)=0</li>
-                        <li>cos(0°)=1, cos(90°)=0, cos(180°)=-1</li>
-                        <li>tan(45°)=1, ctg(45°)=1</li>
-                        <li>tan и ctg обратны друг другу</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Основные углы в градусах
-        const angles = [0, 30, 45, 60, 90, 120, 135, 150, 180];
-        
-        // Тригонометрические значения (включая ctg)
-        const trigValues = {
-            0: { 
-                sin: 0, 
-                cos: 1, 
-                tan: 0,
-                ctg: 'не опр.'
-            },
-            30: { 
-                sin: '1/2', 
-                cos: '√3/2', 
-                tan: '√3/3',
-                ctg: '√3'
-            },
-            45: { 
-                sin: '√2/2', 
-                cos: '√2/2', 
-                tan: 1,
-                ctg: 1
-            },
-            60: { 
-                sin: '√3/2', 
-                cos: '1/2', 
-                tan: '√3',
-                ctg: '√3/3'
-            },
-            90: { 
-                sin: 1, 
-                cos: 0, 
-                tan: 'не опр.',
-                ctg: 0
-            },
-            120: { 
-                sin: '√3/2', 
-                cos: '-1/2', 
-                tan: '-√3',
-                ctg: '-√3/3'
-            },
-            135: { 
-                sin: '√2/2', 
-                cos: '-√2/2', 
-                tan: -1,
-                ctg: -1
-            },
-            150: { 
-                sin: '1/2', 
-                cos: '-√3/2', 
-                tan: '-√3/3',
-                ctg: '-√3'
-            },
-            180: { 
-                sin: 0, 
-                cos: -1, 
-                tan: 0,
-                ctg: 'не опр.'
-            }
-        };
-        
-        // Элементы DOM
-        const tableBody = document.getElementById('tableBody');
-        const showAllBtn = document.getElementById('showAllBtn');
-        const practiceBtn = document.getElementById('practiceBtn');
-        const quizBtn = document.getElementById('quizBtn');
-        const resetBtn = document.getElementById('resetBtn');
-        const quizContainer = document.getElementById('quizContainer');
-        const quizQuestion = document.getElementById('quizQuestion');
-        const quizOptions = document.getElementById('quizOptions');
-        const quizResult = document.getElementById('quizResult');
-        
-        // Текущий режим
-        let currentMode = 'showAll';
-        let hiddenCells = [];
-        let quizQuestions = [];
-        let currentQuestionIndex = 0;
-        let score = 0;
-        
-        // Инициализация таблицы
-        function initTable() {
-            tableBody.innerHTML = '';
-            
-            angles.forEach(angle => {
-                const rad = (angle * Math.PI / 180).toFixed(3);
-                const values = trigValues[angle];
-                
-                const row = document.createElement('tr');
-                
-                // Угол в градусах
-                const angleCell = document.createElement('td');
-                angleCell.textContent = ${angle}°;
-                angleCell.className = 'angle-cell';
-                row.appendChild(angleCell);
-                
-                // Угол в радианах
-                const radCell = document.createElement('td');
-                radCell.textContent = rad;
-                row.appendChild(radCell);
-                
-                // sin
-                const sinCell = document.createElement('td');
-                sinCell.innerHTML = <span>${values.sin}</span>;
-                sinCell.className = 'value-cell';
-                sinCell.dataset.angle = angle;
-                sinCell.dataset.func = 'sin';
-                sinCell.dataset.value = values.sin;
-                row.appendChild(sinCell);
-                
-                // cos
-                const cosCell = document.createElement('td');
-                cosCell.innerHTML = <span>${values.cos}</span>;
-                cosCell.className = 'value-cell';
-                cosCell.dataset.angle = angle;
-                cosCell.dataset.func = 'cos';
-                cosCell.dataset.value = values.cos;
-                row.appendChild(cosCell);
-                
-                // tan
-                const tanCell = document.createElement('td');
-                tanCell.innerHTML = <span>${values.tan}</span>;
-                           tanCell.className = 'value-cell';
-                tanCell.dataset.angle = angle;
-                tanCell.dataset.func = 'tan';
-                tanCell.dataset.value = values.tan;
-                row.appendChild(tanCell);
-                
-                // ctg
-                const ctgCell = document.createElement('td');
-                ctgCell.innerHTML = <span>${values.ctg}</span>;
-                ctgCell.className = 'value-cell';
-                ctgCell.dataset.angle = angle;
-                ctgCell.dataset.func = 'ctg';
-                ctgCell.dataset.value = values.ctg;
-                row.appendChild(ctgCell);
-                
-                tableBody.appendChild(row);
-            });
-            
-            updateTableForMode();
+        .tasks-sidebar {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            height: fit-content;
         }
         
-        // Обновление таблицы в зависимости от режима
-        function updateTableForMode() {
-            const valueCells = document.querySelectorAll('.value-cell');
-            
-            // Сброс всех стилей
-            valueCells.forEach(cell => {
-                cell.classList.remove('hidden', 'correct', 'incorrect');
-                cell.onclick = null;
-            });
-            
-            if (currentMode === 'practice') {
-                // Скрываем случайные 10 ячеек для запоминания
-                hiddenCells = [];
-                const allCells = Array.from(valueCells);
-                
-                // Исключаем ячейки с "не опр."
-                const availableCells = allCells.filter(cell => {
-                    return cell.dataset.value !== 'не опр.';
-                });
-                
-                // Выбираем случайные 10 ячеек
-                while (hiddenCells.length < 10 && hiddenCells.length < availableCells.length) {
-                    const randomIndex = Math.floor(Math.random() * availableCells.length);
-                    const cell = availableCells[randomIndex];
-                    
-                    if (!hiddenCells.includes(cell)) {
-                        hiddenCells.push(cell);
-                    }
-                }
-                
-                // Скрываем выбранные ячейки
-                hiddenCells.forEach(cell => {
-                    cell.classList.add('hidden');
-                    cell.onclick = () => revealCell(cell);
-                });
-            } else if (currentMode === 'showAll') {
-                // Показываем все значения
-                hiddenCells = [];
-            }
+        .tasks-sidebar h2 {
+            color: #1a5fb4;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eaeaea;
         }
         
-        // Показать скрытую ячейку
-        function revealCell(cell) {
-            cell.classList.remove('hidden');
-            const index = hiddenCells.indexOf(cell);
-            if (index > -1) {
-                hiddenCells.splice(index, 1);
-            }
+        .tasks-list {
+            list-style: none;
+            max-height: 500px;
+            overflow-y: auto;
         }
         
-        // Переключение режимов
-        showAllBtn.addEventListener('click', () => {
-            currentMode = 'showAll';
-            updateActiveButton(showAllBtn);
-            quizContainer.classList.remove('active');
-            document.getElementById('trigTable').classList.remove('practice-mode');
-            updateTableForMode();
-        });
-        
-        practiceBtn.addEventListener('click', () => {
-            currentMode = 'practice';
-            updateActiveButton(practiceBtn);
-            quizContainer.classList.remove('active');
-            document.getElementById('trigTable').classList.add('practice-mode');
-            updateTableForMode();
-        });
-        
-        quizBtn.addEventListener('click', () => {
-            currentMode = 'quiz';
-            updateActiveButton(quizBtn);
-            document.getElementById('trigTable').classList.remove('practice-mode');
-            startQuiz();
-        });
-        
-        resetBtn.addEventListener('click', () => {
-            initTable();
-            quizContainer.classList.remove('active');
-            document.getElementById('trigTable').classList.remove('practice-mode');
-            currentMode = 'showAll';
-            updateActiveButton(showAllBtn);
-        });
-        
-        // Обновление активной кнопки
-        function updateActiveButton(activeBtn) {
-            [showAllBtn, practiceBtn, quizBtn].forEach(btn => {
-                btn.classList.remove('active');
-            });
-            activeBtn.classList.add('active');
+        .task-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid #1a5fb4;
         }
         
-        // Викторина
-        function startQuiz() {
-            quizQuestions = generateQuizQuestions();
-            currentQuestionIndex = 0;
-            score = 0;
-            showNextQuestion();
-            quizContainer.classList.add('active');
+        .task-item:hover {
+            background-color: #e1eeff;
+            transform: translateX(5px);
         }
         
-        function generateQuizQuestions() {
-            const questions = [];
-            const questionTypes = ['sin', 'cos', 'tan', 'ctg'];
-            
-            // Выбираем 6 случайных углов
-            const quizAngles = [...angles]
-                .sort(() => Math.random() - 0.5)
-                .slice(0, 6);
-            
-            quizAngles.forEach(angle => {
-                const type = questionTypes[Math.floor(Math.random() * questionTypes.length)];
-                
-                const correctAnswer = trigValues[angle][type];
-                
-                // Пропускаем вопросы с "не опр."
-                if (correctAnswer === 'не опр.') return;
-                
-                // Создаем неправильные варианты ответов
-                const incorrectAnswers = generateIncorrectAnswers(angle, type, correctAnswer);
-                
-                // Смешиваем правильные и неправильные ответы
-                const allAnswers = [correctAnswer, ...incorrectAnswers]
-                    .sort(() => Math.random() - 0.5);
-                
-                questions.push({
-                    angle,
-                    type,
-                    correctAnswer,
-                    answers: allAnswers
-                });
-            });
-            
-            return questions;
+        .task-item.active {
+            background-color: #d4e6ff;
+            border-left: 4px solid #ff6b00;
+            font-weight: 600;
         }
         
-        function generateIncorrectAnswers(angle, type, correctAnswer) {
-            const incorrect = [];
-            const allValues = new Set();
-            
-            // Собираем все возможные значения из таблицы
-            angles.forEach(a => {
-                if (a !== angle) {
-                    const value = trigValues[a][type];
-                    if (value !== correctAnswer && value !== 'не опр.') {
-                        allValues.add(value);
-                    }
-                }
-                
-                // Добавляем обратные значения для tan/ctg
-                if ((type === 'tan' && trigValues[a]['ctg'] !== 'не опр.') || 
-                    (type === 'ctg' && trigValues[a]['tan'] !== 'не опр.')) {
-                    const inverseValue = type === 'tan' ? trigValues[a]['ctg'] : trigValues[a]['tan'];
-                    if (inverseValue !== correctAnswer && inverseValue !== 'не опр.') {
-                        allValues.add(inverseValue);
-                    }
-                }
-            });
-            
-            // Преобразуем в массив и выбираем 3 случайных
-            const valuesArray = Array.from(allValues)
-                .sort(() => Math.random() - 0.5)
-                .slice(0, 3);
-            
-            return valuesArray;
+        .task-number {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background-color: #1a5fb4;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            margin-right: 10px;
+            font-weight: bold;
         }
         
-        function showNextQuestion() {
-            if (currentQuestionIndex >= quizQuestions.length) {
-                showQuizResults();
-                return;
-            }
-            
-            const question = quizQuestions[currentQuestionIndex];
-            
-            // Отображаем функцию с правильным названием
-            const funcNames = {
-                'sin': 'синус',
-                'cos': 'косинус', 
-                'tan': 'тангенс',
-                'ctg': 'котангенс'
-            };
-            
-            quizQuestion.textContent = Чему равен ${funcNames[question.type]}(${question.angle}°)?;
-            quizOptions.innerHTML = '';
-            quizResult.className = 'quiz-result';
-            
-            question.answers.forEach((answer, index) => {
-                const option = document.createElement('div');
-                option.className = 'quiz-option';
-                option.textContent = answer;
-                option.dataset.index = index;
-                option.
-                    onclick = () => checkAnswer(answer, question.correctAnswer, option);
-                quizOptions.appendChild(option);
-            });
+        .task-item.active .task-number {
+            background-color: #ff6b00;
         }
         
-        function checkAnswer(selected, correct, optionElement) {
-            const allOptions = document.querySelectorAll('.quiz-option');
-            
-            // Отключаем все варианты
-            allOptions.forEach(opt => {
-                opt.onclick = null;
-            });
-            
-            // Показываем правильные/неправильные ответы
-            allOptions.forEach(opt => {
-                if (opt.textContent === correct) {
-                    opt.classList.add('correct');
-                }
-                
-                if (opt === optionElement && selected !== correct) {
-                    opt.classList.add('incorrect');
-                }
-            });
-            
-            // Показываем результат
-            if (selected === correct) {
-                quizResult.textContent = 'Правильно! ✓';
-                quizResult.className = 'quiz-result correct';
-                score++;
-            } else {
-                quizResult.textContent = Неправильно. Правильный ответ: ${correct};
-                quizResult.className = 'quiz-result incorrect';
-            }
-            
-            // Переход к следующему вопросу через 2 секунды
-            setTimeout(() => {
-                currentQuestionIndex++;
-                showNextQuestion();
-            }, 2000);
+        .task-content {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
         }
         
-        function showQuizResults() {
-            quizQuestion.textContent = 'Викторина завершена!';
-            quizOptions.innerHTML = '';
-            
-            const percentage = Math.round((score / quizQuestions.length) * 100);
-            let message = Ваш результат: ${score} из ${quizQuestions.length} (${percentage}%);
-            
-            if (percentage === 100) message += ' 🎉 Отлично!';
-            else if (percentage >= 80) message += ' 👍 Хорошо!';
-            else if (percentage >= 60) message += ' 🙂 Неплохо!';
-            else message += ' 📚 Есть над чем поработать';
-            
-            quizResult.textContent = message;
-            quizResult.className = 'quiz-result ' + (percentage >= 70 ? 'correct' : 'incorrect');
-            
-            // Кнопка для повторения викторины
-            const restartBtn = document.createElement('button');
-            restartBtn.textContent = 'Пройти ещё раз';
-            restartBtn.style.marginTop = '20px';
-            restartBtn.onclick = startQuiz;
-            quizOptions.appendChild(restartBtn);
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eaeaea;
         }
         
-        // Инициализация приложения
-        initTable();
-        updateActiveButton(showAllBtn);
-    </script>
-</body>
-</html>
+        .task-title {
+            color: #1a5fb4;
+            font-size: 1.8rem;
+        }
+        
+        .task-difficulty {
+            background-color: #e1eeff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .task-tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .tab-btn {
+            padding: 12px 25px;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            
